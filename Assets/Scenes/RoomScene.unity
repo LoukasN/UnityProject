@@ -287,15 +287,15 @@ Light:
   m_GameObject: {fileID: 446208877}
   m_Enabled: 1
   serializedVersion: 13
-  m_Type: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 5000
-  m_Range: 21000
+  m_Type: 2
+  m_Color: {r: 0.9647792, g: 0.96981126, b: 0.8691705, a: 1}
+  m_Intensity: 100
+  m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -352,7 +352,7 @@ Transform:
   m_GameObject: {fileID: 446208877}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 60, z: 0}
+  m_LocalPosition: {x: 0, y: 9.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -923,10 +923,10 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 446208880}
   - {fileID: 1635437727}
   - {fileID: 1810987725}
   - {fileID: 2019598753}
   - {fileID: 774926861}
   - {fileID: 578469782}
   - {fileID: 130339881}
-  - {fileID: 446208880}
