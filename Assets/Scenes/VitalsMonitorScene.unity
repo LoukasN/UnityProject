@@ -469,11 +469,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1854943580}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1291ff7e3eb1ce4fb99ceba68a42580, type: 3}
+  m_Script: {fileID: 11500000, guid: 05f4de5400bec2cc7ab214f1b6ef3903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.VitalsMonitor
-  spawnPrefab: {fileID: 1975457108487340, guid: ec3e8f3ed27e2244caaedaf589590a03, type: 3}
-  objectInteractMessage: Press E to Interact
+  spawnPrefab: {fileID: 0}
+  objectInteractMessage: Press E to interact
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

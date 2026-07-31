@@ -11,7 +11,7 @@ namespace DefaultNamespace
         [SerializeField] float interactionDistance = 5f;
         [SerializeField] LayerMask interactableLayers = ~0;
 
-        InterfaceInteractable currentTargetInteractable;   // <-- was missing
+        InterfaceInteractable currentTargetInteractable;
 
         void Update()
         {
@@ -22,8 +22,7 @@ namespace DefaultNamespace
 
         void UpdateCurrentInteractable()
         {
-            var ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f,
-0f));
+            var ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
             if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance,
 interactableLayers))
