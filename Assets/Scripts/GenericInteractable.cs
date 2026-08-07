@@ -1,14 +1,31 @@
 using UnityEngine;
 
-namespace DefaultNamespace{
-    public class GenericInteractable : MonoBehaviour, InterfaceInteractable{
+namespace DefaultNamespace
+{
+    public class GenericInteractable : MonoBehaviour, InterfaceInteractable
+    {
         public string InteractMessage => objectInteractMessage;
 
-        [SerializeField] GameObject spawnPrefab;
+        public enum InteractableType
+        {
+            CallDoctor,
+            BreathTube
+        }
+
         [SerializeField] string objectInteractMessage;
 
-        public void Interact(){
-            Instantiate(spawnPrefab);
+        [SerializeField] InteractableType interactableType;
+
+        public void Interact()
+        {
+            if (interactableType == InteractableType.CallDoctor)
+            {
+                UIManager.Instance.OpenCallDoctor();
+            }
+            else if (interactableType == InteractableType.BreathTube)
+            {
+                UIManager.Instance.OpenBreathTube();
+            }
         }
     }
 }
