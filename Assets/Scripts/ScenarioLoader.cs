@@ -25,10 +25,27 @@ public class ScenarioLoader : MonoBehaviour {
         Debug.Log($"Initial Bp: {scenario.initialState.vitals.bp}");
         Debug.Log($"Initial temp: {scenario.initialState.vitals.temp}");
         Debug.Log($"Nodes count: {scenario.nodes.Count}");
-        // Debug.Log($"Test: {scenario.nodes[0].id}");
-        // Debug.Log($"Test1: {scenario.rules.globalRules[0].condition["vitals.spo2"]}");
-        // Debug.Log($"Test1: {scenario.rules.globalRules[0].condition.ContainsKey()}");
-        // Debug.Log($"Test2: {scenario.rules.globalRules[0].condition["vitals.hr"]}");
-        // Debug.Log($"Test3: {scenario.rules.globalRules[0].condition["vitals.bp"]}");
+        Debug.Log($"Test: {scenario.nodes[0].id}");
+        foreach (var node in scenario.nodes) {
+            if (node.id == "n7_gate_documentation_2") {
+                Debug.Log($"From Id: {node.gateRequirements.requiredForms[0].formId}");
+                foreach (var form in node.gateRequirements.requiredForms[0].fields) {
+                    Debug.Log($"From fields: {form}");
+                }
+            }
+        }
+
+        if (scenario.rules.globalRules[0].effects[0].type == "ui_visual"){
+            Debug.Log($"{scenario.rules.globalRules[0].effects[0].type}");
+            Debug.Log($"{scenario.rules.globalRules[0].effects[0].target}");
+            Debug.Log($"{scenario.rules.globalRules[0].effects[0].state}");
+        }
+
+        if (scenario.rules.globalRules[0].effects[1].type == "ui_toast"){
+            Debug.Log($"{scenario.rules.globalRules[0].effects[1].type}");
+            Debug.Log($"{scenario.rules.globalRules[0].effects[1].style}");
+            Debug.Log($"{scenario.rules.globalRules[0].effects[1].message}");
+        }
+        
     }
 }
