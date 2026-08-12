@@ -180,10 +180,27 @@ public class GateRequirements {
     [JsonProperty("target_hotspot")]
     public string targetHotspot;
 
-    // [JsonProperty("required_forms")]
-    // public List<string> requiredForms;
+    [JsonProperty("required_forms")]
+    public List<RequiredForm> requiredForms;
+}
+
+public class RequiredForm {
+    [JsonProperty("form_id")]
+    public string formId;
+
+    public List<string> fields;
 }
 
 public class DebriefConfig {
-    public Dictionary<string, bool> debrief;
+    [JsonProperty("show_score")]
+    public bool showScore;
+
+    [JsonProperty("show_decision_path")]
+    public bool showDecisionPath;
+
+    [JsonProperty("highlight_missed_docs")]
+    public bool highlightMissedDocs;
+
+    [JsonProperty("export_log")]
+    public bool exportLog;
 }
