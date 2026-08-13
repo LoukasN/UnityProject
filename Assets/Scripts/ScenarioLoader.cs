@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 public class ScenarioLoader : MonoBehaviour {
     private Scenario currentScenario;
+    public Scenario CurrentScenario => currentScenario;
 
     void Start() {
         Debug.Log("Starting Scenario...");
@@ -29,6 +30,10 @@ public class ScenarioLoader : MonoBehaviour {
     
             Debug.Log($"Loaded scenario: {currentScenario.meta.title}");
             Debug.Log($"Schema version: {currentScenario.schemaVersion}");
+
+            GameTimer.Instance.StartTimer();
+            Debug.Log("Timer Started");
+
             return true;
         }
         catch (JsonException ex) {
