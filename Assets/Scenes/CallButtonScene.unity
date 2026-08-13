@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 1115510904}
   - component: {fileID: 1115510903}
   - component: {fileID: 1115510907}
+  - component: {fileID: 1115510908}
   m_Layer: 0
   m_Name: ButtonBase
   m_TagString: Untagged
@@ -246,6 +247,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.GenericInteractable
   objectInteractMessage: Press E to interact
+  interactableType: 0
+--- !u!114 &1115510908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115510902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eded4d0af13f895aa01a34287b34130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScenarioLoader
 --- !u!1 &2003704465
 GameObject:
   m_ObjectHideFlags: 0
