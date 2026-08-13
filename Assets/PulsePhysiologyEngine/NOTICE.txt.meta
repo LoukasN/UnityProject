@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d56a549d34525a446b6c7a8a6b4c9a31
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 139773
+  packageName: Pulse Physiology Engine
+  packageVersion: 4.3.1
+  assetPath: Assets/PulsePhysiologyEngine/NOTICE.txt
+  uploadId: 728075
