@@ -4312,7 +4312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.VitalsMonitor
   objectInteractMessage: Press E to interact
-  interactableType: 0
+  interactableType: 2
 --- !u!1 &1868589353
 GameObject:
   m_ObjectHideFlags: 0

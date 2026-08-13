@@ -9,7 +9,8 @@ namespace DefaultNamespace
         public enum InteractableType
         {
             CallDoctor,
-            BreathTube
+            BreathTube,
+            VitalsMonitor
         }
 
         [SerializeField] string objectInteractMessage;
@@ -25,6 +26,10 @@ namespace DefaultNamespace
             else if (interactableType == InteractableType.BreathTube)
             {
                 UIManager.Instance.OpenBreathTube();
+            }
+            else if (interactableType == InteractableType.VitalsMonitor)
+            {
+                UIManager.Instance.OpenVitalsMonitor();
             }
         }
     }
