@@ -163,7 +163,7 @@ public class Effects {
     public Dictionary<string, bool> stateUpdate;
 
     [JsonProperty("vitals_update")]
-    public Dictionary<string, int> vitalsUpdate;
+    public Dictionary<string, JValue> vitalsUpdate;
 }
 
 public class Timeout {
