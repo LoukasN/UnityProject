@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -6,8 +7,6 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    public GameObject callDoctorPanel;
-    public GameObject breathTubePanel;
     public GameObject vitalsMonitorPanel;
     public GameObject EHRPanel;
 
@@ -15,6 +14,12 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI startTitleText;
     public TextMeshProUGUI startDescriptionText;
     public TextMeshProUGUI startGoalsText;
+
+    public GameObject endScreenPanel;
+    public TextMeshProUGUI endTitleText;
+    public TextMeshProUGUI endScoreText;
+    public TextMeshProUGUI endDecisionPathText;
+    public TextMeshProUGUI endMissedDocsText;
 
     public GameObject toastPanel;
     public TextMeshProUGUI toastText;
@@ -62,50 +67,6 @@ public class UIManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-    }
-
-    public void OpenCallDoctor()
-    {
-        callDoctorPanel.SetActive(true);
-
-        playerMovement.canMove = false;
-
-        GameTimer.Instance.Pause();
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
-
-    public void CloseCallDoctor()
-    {
-        callDoctorPanel.SetActive(false);
-
-        playerMovement.canMove = true;
-        GameTimer.Instance.Resume();
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    public void OpenVentilator()
-    {
-        breathTubePanel.SetActive(true);
-
-        playerMovement.canMove = false;
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
-
-    public void CloseVentilator()
-    {
-        breathTubePanel.SetActive(false);
-
-
-        playerMovement.canMove = true;
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     public void OpenVitalsMonitor()
@@ -169,6 +130,31 @@ public class UIManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    public void ShowDebrief(string endText, int score, List<string> decisionPath, List<string> missedDocs)
+    {
+        endTitleText.text = endText;
+        endScoreText.text = $"Score: {score}";
+        endDecisionPathText.text = string.Join("\n", decisionPath);
+        endMissedDocsText.text = missedDocs.Count > 0 ? string.Join("\n", missedDocs) : "None";
+
+        endScreenPanel.SetActive(true);
+
+        playerMovement.canMove = false;
+        GameTimer.Instance.Pause();
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void GoToStart()
+    {
+        endScreenPanel.SetActive(false);
+
+        GameTimer.Instance.ResetTimer();
+
+        OpenStartScreen();
     }
 
     public void ShowToast(string message)

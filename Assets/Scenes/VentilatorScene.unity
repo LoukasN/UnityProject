@@ -281,7 +281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.GenericInteractable
   hotspotId: hs_ventilator
   idleMessage: Use Ventilator (E)
-  interactableType: 1
+  interactableType: 0
   opensPanel: 0
 --- !u!135 &1560424388
 SphereCollider:

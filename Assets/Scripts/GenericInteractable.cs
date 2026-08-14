@@ -6,8 +6,7 @@ namespace DefaultNamespace
     {
         public enum InteractableType
         {
-            CallDoctor,
-            BreathTube,
+            None,
             VitalsMonitor,
             EHR
         }
@@ -72,15 +71,7 @@ namespace DefaultNamespace
 
         void OpenPanel()
         {
-            if (interactableType == InteractableType.CallDoctor)
-            {
-                UIManager.Instance.OpenCallDoctor();
-            }
-            else if (interactableType == InteractableType.BreathTube)
-            {
-                UIManager.Instance.OpenVentilator();
-            }
-            else if (interactableType == InteractableType.VitalsMonitor)
+            if (interactableType == InteractableType.VitalsMonitor)
             {
                 UIManager.Instance.OpenVitalsMonitor();
             }

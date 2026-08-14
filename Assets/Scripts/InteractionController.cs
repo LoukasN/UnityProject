@@ -12,9 +12,21 @@ namespace DefaultNamespace
         [SerializeField] LayerMask interactableLayers = ~0;
 
         InterfaceInteractable currentTargetInteractable;
+        PlayerMovement playerMovement;
+
+        void Start()
+        {
+            playerMovement = FindFirstObjectByType<PlayerMovement>();
+        }
 
         void Update()
         {
+            if (playerMovement != null && !playerMovement.canMove)
+            {
+                interactionText.text = string.Empty;
+                return;
+            }
+
             UpdateCurrentInteractable();
             UpdateInteractionText();
             CheckForInteractionInput();

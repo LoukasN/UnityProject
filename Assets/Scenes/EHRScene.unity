@@ -1436,7 +1436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.VitalsMonitor
   hotspotId: hs_ehr
   idleMessage: Check Monitor (E)
-  interactableType: 3
+  interactableType: 2
   opensPanel: 1
 --- !u!65 &1005747062
 BoxCollider:
@@ -3310,6 +3310,22 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 0
+--- !u!114 &1641488716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c300108eb8c4b144a3c57c88e71fca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pulse.Unity.PulseData
+  timeStampList:
+    list: []
+  valuesTable:
+  - list: []
 --- !u!1 &1662204470
 GameObject:
   m_ObjectHideFlags: 0
@@ -3339,7 +3355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b9af4d0cdfe6644ab4ac0255a8f4396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.EcgWaveformSource
-  data: {fileID: 1948419470}
+  data: {fileID: 1641488716}
   ecgJson: {fileID: 4900000, guid: 4a0a4aacd388a4b4d89cef95ad94acca, type: 3}
   fallbackHr: 75
 --- !u!4 &1662204472
@@ -4087,22 +4103,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1948419470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c300108eb8c4b144a3c57c88e71fca4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pulse.Unity.PulseData
-  timeStampList:
-    list: []
-  valuesTable:
-  - list: []
 --- !u!1 &2034313979
 GameObject:
   m_ObjectHideFlags: 0
