@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 522001519}
   - component: {fileID: 522001518}
   m_Layer: 0
-  m_Name: BreathStuff
+  m_Name: Ventilator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -279,9 +279,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f4de5400bec2cc7ab214f1b6ef3903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.GenericInteractable
-  hotspotId: 
+  hotspotId: hs-ventilator
   idleMessage: Use Ventilator (E)
   interactableType: 1
+  opensPanel: 0
 --- !u!135 &1560424388
 SphereCollider:
   m_ObjectHideFlags: 0

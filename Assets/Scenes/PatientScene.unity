@@ -166,9 +166,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f4de5400bec2cc7ab214f1b6ef3903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.GenericInteractable
-  hotspotId: 
+  hotspotId: hs_patient
   idleMessage: Check Vitals (E)
   interactableType: 0
+  opensPanel: 0
 --- !u!65 &459631966
 BoxCollider:
   m_ObjectHideFlags: 0
