@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -8,6 +9,12 @@ public class UIManager : MonoBehaviour
     public GameObject callDoctorPanel;
     public GameObject breathTubePanel;
     public GameObject vitalsMonitorPanel;
+
+    public GameObject toastPanel;
+    public TextMeshProUGUI toastText;
+    public float toastDuration = 5f;
+
+    Coroutine toastCoroutine;
 
     public PlayerMovement playerMovement;
 
@@ -23,8 +30,6 @@ public class UIManager : MonoBehaviour
         var scenarioLoader = FindFirstObjectByType<ScenarioLoader>();
         var vitalsDataSource = FindFirstObjectByType<DefaultNamespace.VitalsDataSource>();
 
-        // Wait until ScenarioLoader has actually finished parsing the JSON,
-        // regardless of which script's Start() happened to run first.
         while (scenarioLoader.CurrentScenario == null)
             yield return null;
 
@@ -99,5 +104,25 @@ public class UIManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    public void ShowToast(string message)
+    {
+        if (string.IsNullOrEmpty(message))
+            return;
+
+        if (toastCoroutine != null)
+            StopCoroutine(toastCoroutine);
+
+        toastText.text = message;
+        toastPanel.SetActive(true);
+
+        toastCoroutine = StartCoroutine(HideToastAfterDelay());
+    }
+
+    IEnumerator HideToastAfterDelay()
+    {
+        yield return new WaitForSeconds(toastDuration);
+        toastPanel.SetActive(false);
     }
 }

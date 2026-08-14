@@ -38,7 +38,7 @@ namespace DefaultNamespace
             }
             else
             {
-                Debug.Log($"{hotspotId}: not relevant to the current node.");
+                UIManager.Instance.ShowToast($"{hotspotId}: not needed right now.");
             }
 
             OpenPanel();
@@ -57,8 +57,7 @@ namespace DefaultNamespace
 
         void HandleOption(Option option)
         {
-            if (!string.IsNullOrEmpty(option.effects?.toast))
-                Debug.Log($"[Toast] {option.effects.toast}");
+            UIManager.Instance.ShowToast(option.effects?.toast);
 
             if (option.effects?.vitalsUpdate != null)
             {
