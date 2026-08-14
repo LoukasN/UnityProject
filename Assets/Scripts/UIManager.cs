@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -13,6 +14,21 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         playerMovement = FindFirstObjectByType<PlayerMovement>();
+
+        StartCoroutine(PushInitialVitalsWhenReady());
+    }
+
+    IEnumerator PushInitialVitalsWhenReady()
+    {
+        var scenarioLoader = FindFirstObjectByType<ScenarioLoader>();
+        var vitalsDataSource = FindFirstObjectByType<DefaultNamespace.VitalsDataSource>();
+
+        // Wait until ScenarioLoader has actually finished parsing the JSON,
+        // regardless of which script's Start() happened to run first.
+        while (scenarioLoader.CurrentScenario == null)
+            yield return null;
+
+        vitalsDataSource.UpdateVitals(scenarioLoader.CurrentScenario.initialState.vitals);
     }
 
     void Awake()

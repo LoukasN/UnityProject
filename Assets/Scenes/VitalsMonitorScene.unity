@@ -513,8 +513,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 617b61f1695796740b4ec9739cb4040b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  dataFieldIndex: 0
+  source: {fileID: 1750263374}
+  dataFieldIndex: 2
   prefix: 
   suffix: 
   multiplier: 1
@@ -723,8 +723,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 617b61f1695796740b4ec9739cb4040b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  dataFieldIndex: 9
+  source: {fileID: 1750263374}
+  dataFieldIndex: 5
   prefix: 
   suffix: 
   multiplier: 1
@@ -1587,8 +1587,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 617b61f1695796740b4ec9739cb4040b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  dataFieldIndex: 0
+  source: {fileID: 1750263374}
+  dataFieldIndex: 1
   prefix: 
   suffix: /
   multiplier: 1
@@ -2231,7 +2231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 617b61f1695796740b4ec9739cb4040b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
+  source: {fileID: 1750263374}
   dataFieldIndex: 0
   prefix: 
   suffix: 
@@ -2441,11 +2441,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 617b61f1695796740b4ec9739cb4040b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  dataFieldIndex: 7
+  source: {fileID: 1750263374}
+  dataFieldIndex: 4
   prefix: 
   suffix: 
-  multiplier: 100
+  multiplier: 1
   decimals: 0
   frequency: 0
 --- !u!114 &1248420786
@@ -2600,6 +2600,28 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 0
+--- !u!114 &1464576696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c300108eb8c4b144a3c57c88e71fca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pulse.Unity.PulseData
+  timeStampList:
+    list: []
+  valuesTable:
+  - list: []
+  - list: []
+  - list: []
+  - list: []
+  - list: []
+  - list: []
+  - list: []
 --- !u!1 &1604168861
 GameObject:
   m_ObjectHideFlags: 0
@@ -2838,6 +2860,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1750263373}
+  - component: {fileID: 1750263374}
   m_Layer: 0
   m_Name: Vitals Monitor
   m_TagString: Untagged
@@ -2861,6 +2884,19 @@ Transform:
   - {fileID: 1816593074}
   m_Father: {fileID: 1854943581}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1750263374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750263372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97028b25c0c010a408caaba631b104b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.VitalsDataSource
+  data: {fileID: 1464576696}
 --- !u!1 &1787343759
 GameObject:
   m_ObjectHideFlags: 0
@@ -3181,8 +3217,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 617b61f1695796740b4ec9739cb4040b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  dataFieldIndex: 0
+  source: {fileID: 1750263374}
+  dataFieldIndex: 3
   prefix: 
   suffix: 
   multiplier: 1
@@ -3767,8 +3803,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 617b61f1695796740b4ec9739cb4040b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  dataFieldIndex: 10
+  source: {fileID: 1750263374}
+  dataFieldIndex: 6
   prefix: 
   suffix: 
   multiplier: 1
@@ -3953,7 +3989,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2116900054}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3963,8 +3999,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.15}
-  m_AnchoredPosition: {x: 0.03999996, y: 0.19999981}
-  m_SizeDelta: {x: -0.08, y: 0.16}
+  m_AnchoredPosition: {x: 0.04000187, y: 0.19999981}
+  m_SizeDelta: {x: -0.07999992, y: 0.16}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2116900056
 MonoBehaviour:
