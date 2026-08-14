@@ -8,7 +8,8 @@ namespace DefaultNamespace
         {
             CallDoctor,
             BreathTube,
-            VitalsMonitor
+            VitalsMonitor,
+            EHR
         }
 
         [SerializeField] string hotspotId;
@@ -77,11 +78,15 @@ namespace DefaultNamespace
             }
             else if (interactableType == InteractableType.BreathTube)
             {
-                UIManager.Instance.OpenBreathTube();
+                UIManager.Instance.OpenVentilator();
             }
             else if (interactableType == InteractableType.VitalsMonitor)
             {
                 UIManager.Instance.OpenVitalsMonitor();
+            }
+            else if (interactableType == InteractableType.EHR)
+            {
+                UIManager.Instance.OpenEHR();
             }
         }
 

@@ -279,7 +279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f4de5400bec2cc7ab214f1b6ef3903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.GenericInteractable
-  hotspotId: hs-ventilator
+  hotspotId: hs_ventilator
   idleMessage: Use Ventilator (E)
   interactableType: 1
   opensPanel: 0

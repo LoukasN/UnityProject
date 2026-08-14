@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     public GameObject callDoctorPanel;
     public GameObject breathTubePanel;
     public GameObject vitalsMonitorPanel;
+    public GameObject EHRPanel;
 
     public GameObject toastPanel;
     public TextMeshProUGUI toastText;
@@ -64,7 +65,7 @@ public class UIManager : MonoBehaviour
         Cursor.visible = false;
     }
 
-    public void OpenBreathTube()
+    public void OpenVentilator()
     {
         breathTubePanel.SetActive(true);
 
@@ -74,7 +75,7 @@ public class UIManager : MonoBehaviour
         Cursor.visible = true;
     }
 
-    public void CloseBreathTube()
+    public void CloseVentilator()
     {
         breathTubePanel.SetActive(false);
 
@@ -98,6 +99,27 @@ public class UIManager : MonoBehaviour
     public void CloseVitalsMonitor()
     {
         vitalsMonitorPanel.SetActive(false);
+
+
+        playerMovement.canMove = true;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public void OpenEHR()
+    {
+        EHRPanel.SetActive(true);
+
+        playerMovement.canMove = false;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void CloseEHR()
+    {
+        EHRPanel.SetActive(false);
 
 
         playerMovement.canMove = true;
