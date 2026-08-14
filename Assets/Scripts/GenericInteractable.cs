@@ -17,6 +17,8 @@ namespace DefaultNamespace
 
         [SerializeField] InteractableType interactableType;
 
+        [SerializeField] bool opensPanel = true;
+
         ScenarioLoader scenarioLoader;
 
         public string InteractMessage
@@ -41,7 +43,8 @@ namespace DefaultNamespace
                 UIManager.Instance.ShowToast($"{hotspotId}: not needed right now.");
             }
 
-            OpenPanel();
+            if (opensPanel)
+                OpenPanel();
         }
 
         Option GetActiveOption()
