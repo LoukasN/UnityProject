@@ -670,7 +670,7 @@ MonoBehaviour:
   endMissedDocsText: {fileID: 829793556}
   toastPanel: {fileID: 2104667852}
   toastText: {fileID: 1445547345}
-  toastDuration: 3
+  toastDuration: 1.5
   playerMovement: {fileID: 0}
 --- !u!224 &428879246
 RectTransform:
@@ -724,10 +724,10 @@ RectTransform:
   - {fileID: 1445547344}
   m_Father: {fileID: 2104667853}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -669.98, y: 353}
-  m_SizeDelta: {x: 481.6365, y: 139.6558}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -636.08307, y: 281.21625}
+  m_SizeDelta: {x: -1272.1581, y: -904.6956}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &445340409
 MonoBehaviour:
@@ -1635,7 +1635,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -7.8027954, y: 69.225}
+  m_AnchoredPosition: {x: -7.8028564, y: 69.225006}
   m_SizeDelta: {x: -15.6056, y: -138.4497}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1039169878
@@ -2114,8 +2114,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00039291, y: 0.0010649}
-  m_SizeDelta: {x: 481.64, y: 139.66}
+  m_AnchoredPosition: {x: 0.0000038146973, y: -0.00025368}
+  m_SizeDelta: {x: 647.84, y: 175.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1445547345
 MonoBehaviour:
@@ -2168,8 +2168,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 26
+  m_fontSizeBase: 26
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3117,8 +3117,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0045776, y: 0.0011139}
-  m_SizeDelta: {x: 1821.6, y: 1138.3}
+  m_AnchoredPosition: {x: 0.0009994507, y: 14.576}
+  m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2138598055
 GameObject:
