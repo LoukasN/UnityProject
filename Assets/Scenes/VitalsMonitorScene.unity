@@ -1071,7 +1071,7 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 0
---- !u!114 &397717374
+--- !u!114 &291955759
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2957,7 +2957,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b9af4d0cdfe6644ab4ac0255a8f4396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.EcgWaveformSource
-  data: {fileID: 397717374}
+  data: {fileID: 291955759}
   ecgJson: {fileID: 4900000, guid: 4a0a4aacd388a4b4d89cef95ad94acca, type: 3}
   fallbackHr: 75
 --- !u!4 &1302743495
@@ -2975,28 +2975,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1854943581}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1525092270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c300108eb8c4b144a3c57c88e71fca4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pulse.Unity.PulseData
-  timeStampList:
-    list: []
-  valuesTable:
-  - list: []
-  - list: []
-  - list: []
-  - list: []
-  - list: []
-  - list: []
-  - list: []
 --- !u!1 &1604168861
 GameObject:
   m_ObjectHideFlags: 0
@@ -3273,7 +3251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97028b25c0c010a408caaba631b104b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.VitalsDataSource
-  data: {fileID: 1525092270}
+  data: {fileID: 2020226631}
 --- !u!1 &1787343759
 GameObject:
   m_ObjectHideFlags: 0
@@ -3543,7 +3521,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f4de5400bec2cc7ab214f1b6ef3903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.VitalsMonitor
-  objectInteractMessage: Press E to interact
+  hotspotId: hs_monitor
+  idleMessage: Check Monitor (E)
   interactableType: 2
 --- !u!1 &1868589353
 GameObject:
@@ -3945,6 +3924,28 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 0
+--- !u!114 &2020226631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c300108eb8c4b144a3c57c88e71fca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pulse.Unity.PulseData
+  timeStampList:
+    list: []
+  valuesTable:
+  - list: []
+  - list: []
+  - list: []
+  - list: []
+  - list: []
+  - list: []
+  - list: []
 --- !u!1 &2056568338
 GameObject:
   m_ObjectHideFlags: 0

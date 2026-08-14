@@ -245,7 +245,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f4de5400bec2cc7ab214f1b6ef3903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.GenericInteractable
-  objectInteractMessage: Press E to interact
+  hotspotId: 
+  idleMessage: Use Button (E)
   interactableType: 0
 --- !u!1 &2003704465
 GameObject:
