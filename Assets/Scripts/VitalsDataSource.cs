@@ -17,6 +17,16 @@ namespace DefaultNamespace
         const int FIELD_RR = 5;
         const int FIELD_TEMP = 6;
 
+        // Current values, kept around so partial updates (a node only
+        // changing spo2 and hr, say) can be merged on top instead of
+        // needing a full Vitals object every time.
+        double currentHr;
+        double currentSystolic;
+        double currentDiastolic;
+        double currentSpo2;
+        double currentRr;
+        double currentTemp;
+
         void Awake()
         {
             data = ScriptableObject.CreateInstance<PulseData>();
@@ -43,23 +53,64 @@ namespace DefaultNamespace
             };
         }
 
-        // Called by whoever drives the scenario (rule engine / game logic)
-        // whenever vitals change.
+        // Called once with the scenario's initial_state.vitals at scene start.
         public void UpdateVitals(Vitals v)
         {
             var (systolic, diastolic) = ParseBp(v.bp);
-            double mean = diastolic + (systolic - diastolic) / 3.0;
+
+            currentHr = v.hr;
+            currentSystolic = systolic;
+            currentDiastolic = diastolic;
+            currentSpo2 = v.spo2;
+            currentRr = v.rr;
+            currentTemp = v.temp;
+
+            PushAll();
+        }
+
+        // Called by the rule engine whenever a node/effect only changes some
+        // vitals (e.g. a decision's "vitals_update": { "spo2": 85, "hr": 120 }).
+        // Any field not present in the dictionary keeps its last value.
+        public void ApplyVitalsUpdate(Dictionary<string, int> updates)
+        {
+            if (updates == null)
+                return;
+
+            foreach (var kv in updates)
+            {
+                switch (kv.Key)
+                {
+                    case "hr": currentHr = kv.Value; break;
+                    case "spo2": currentSpo2 = kv.Value; break;
+                    case "rr": currentRr = kv.Value; break;
+                    case "temp": currentTemp = kv.Value; break;
+                    case "bp_systolic": currentSystolic = kv.Value; break;
+                    case "bp_diastolic": currentDiastolic = kv.Value; break;
+                    default:
+                        Debug.LogWarning($"VitalsDataSource: unknown vitals_update key '{kv.Key}', ignored.");
+                        break;
+                }
+            }
+
+            PushAll();
+        }
+
+        public float CurrentHr => (float)currentHr;
+
+        void PushAll()
+        {
+            double mean = currentDiastolic + (currentSystolic - currentDiastolic) / 3.0;
 
             data.timeStampList.Clear();
             data.timeStampList.Add(Time.time);
 
-            SetField(FIELD_HR, v.hr);
-            SetField(FIELD_BP_SYSTOLIC, systolic);
-            SetField(FIELD_BP_DIASTOLIC, diastolic);
+            SetField(FIELD_HR, currentHr);
+            SetField(FIELD_BP_SYSTOLIC, currentSystolic);
+            SetField(FIELD_BP_DIASTOLIC, currentDiastolic);
             SetField(FIELD_BP_MEAN, mean);
-            SetField(FIELD_SPO2, v.spo2);
-            SetField(FIELD_RR, v.rr);
-            SetField(FIELD_TEMP, v.temp);
+            SetField(FIELD_SPO2, currentSpo2);
+            SetField(FIELD_RR, currentRr);
+            SetField(FIELD_TEMP, currentTemp);
         }
 
         void SetField(int fieldIndex, double value)
