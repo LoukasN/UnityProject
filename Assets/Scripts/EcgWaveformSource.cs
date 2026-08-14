@@ -16,13 +16,23 @@ namespace DefaultNamespace
         [Tooltip("Drag Assets/PulsePhysiologyEngine/Data/ecg/StandardECG.json here.")]
         public TextAsset ecgJson;
 
-        [Tooltip("Starting heart rate used to pace playback until something calls SetHeartRate().")]
-        public float startingHr = 75f;
+        [Tooltip("Fallback pacing only, for the few frames before the scenario JSON has parsed " +
+                 "(or if this scene is opened on its own with no VitalsDataSource). The scenario's " +
+                 "real hr takes over as soon as it loads, whatever it is.")]
+        public float fallbackHr = 75f;
 
         List<double> samples;
         int sampleIndex;
         float timer;
         float currentHr;
+        VitalsDataSource vitals;
+
+        void Start()
+        {
+            // Same scene, but the JSON may not have parsed yet — CurrentHr stays 0
+            // until it does, and SetHeartRate ignores that.
+            vitals = FindFirstObjectByType<VitalsDataSource>();
+        }
 
         void Awake()
         {
@@ -33,12 +43,12 @@ namespace DefaultNamespace
             data.timeStampList = new DoubleList();
             data.valuesTable = new List<DoubleList> { new DoubleList() };
 
-            currentHr = startingHr;
+            currentHr = fallbackHr;
             LoadSamples();
         }
 
-        // Call this from the rule engine (or wire it to VitalsDataSource.CurrentHr)
-        // to make the waveform speed up/slow down as HR changes mid-scenario.
+        // Ignores non-positive values, so a scenario that omits hr (or hasn't
+        // loaded yet) leaves the last good pacing rather than freezing the trace.
         public void SetHeartRate(float hr)
         {
             if (hr > 0)
@@ -49,6 +59,10 @@ namespace DefaultNamespace
         {
             if (!Application.isPlaying || samples == null || samples.Count == 0)
                 return;
+
+            // Track the scenario's live hr, including mid-scenario vitals_update changes.
+            if (vitals != null)
+                SetHeartRate(vitals.CurrentHr);
 
             float samplePeriod = (60f / currentHr) / samples.Count;
 

@@ -160,28 +160,6 @@ Material:
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &77968999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c300108eb8c4b144a3c57c88e71fca4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pulse.Unity.PulseData
-  timeStampList:
-    list: []
-  valuesTable:
-  - list: []
-  - list: []
-  - list: []
-  - list: []
-  - list: []
-  - list: []
-  - list: []
 --- !u!1 &107448914
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,6 +272,7 @@ Transform:
   m_Children:
   - {fileID: 1604168862}
   - {fileID: 1854943581}
+  - {fileID: 1039169877}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 50, z: 0}
 --- !u!1 &115539954
@@ -308,7 +287,7 @@ GameObject:
   - component: {fileID: 115539958}
   - component: {fileID: 115539957}
   - component: {fileID: 115539956}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HeartRate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -497,7 +476,7 @@ GameObject:
   - component: {fileID: 143758483}
   - component: {fileID: 143758482}
   - component: {fileID: 143758481}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: diastolic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -707,7 +686,7 @@ GameObject:
   - component: {fileID: 149187828}
   - component: {fileID: 149187827}
   - component: {fileID: 149187826}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: number
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -916,7 +895,7 @@ GameObject:
   - component: {fileID: 220868427}
   - component: {fileID: 220868426}
   - component: {fileID: 220868425}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: rr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1092,6 +1071,22 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 0
+--- !u!114 &397717374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c300108eb8c4b144a3c57c88e71fca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pulse.Unity.PulseData
+  timeStampList:
+    list: []
+  valuesTable:
+  - list: []
 --- !u!1 &584956010
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,7 +1098,7 @@ GameObject:
   - component: {fileID: 584956011}
   - component: {fileID: 584956013}
   - component: {fileID: 584956012}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1183,7 +1178,7 @@ GameObject:
   - component: {fileID: 759992192}
   - component: {fileID: 759992191}
   - component: {fileID: 759992190}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ECGIII
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1368,7 +1363,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 763765279}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1487,7 +1482,7 @@ GameObject:
   - component: {fileID: 828508122}
   - component: {fileID: 828508124}
   - component: {fileID: 828508123}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1568,7 +1563,7 @@ GameObject:
   - component: {fileID: 846793066}
   - component: {fileID: 846793065}
   - component: {fileID: 846793064}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: systolic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1777,7 +1772,7 @@ GameObject:
   - component: {fileID: 889157078}
   - component: {fileID: 889157077}
   - component: {fileID: 889157076}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SpO2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1964,7 +1959,7 @@ GameObject:
   - component: {fileID: 899593623}
   - component: {fileID: 899593625}
   - component: {fileID: 899593624}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: lineRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2132,7 +2127,7 @@ GameObject:
   - component: {fileID: 912685993}
   - component: {fileID: 912685992}
   - component: {fileID: 912685991}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Backround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2317,7 +2312,7 @@ GameObject:
   - component: {fileID: 914635479}
   - component: {fileID: 914635481}
   - component: {fileID: 914635480}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2398,7 +2393,7 @@ GameObject:
   - component: {fileID: 1015453222}
   - component: {fileID: 1015453221}
   - component: {fileID: 1015453220}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: number
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2595,6 +2590,134 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 0
+--- !u!1 &1039169876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1039169877}
+  - component: {fileID: 1039169879}
+  - component: {fileID: 1039169878}
+  m_Layer: 0
+  m_Name: VitalsMonitorCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1039169877
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039169876}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.046481203, y: -0.0043274756, z: 0.0002025794, w: 0.99890983}
+  m_LocalPosition: {x: 0.029387593, y: 0.94629097, z: -1.7214327}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 107448918}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1039169878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039169876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
+--- !u!20 &1039169879
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039169876}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 1
+  orthographic size: 0.94
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 8400000, guid: 1d837f8176788dc4a925d1e9f0805f24, type: 2}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!1 &1248420783
 GameObject:
   m_ObjectHideFlags: 0
@@ -2608,7 +2731,7 @@ GameObject:
   - component: {fileID: 1248420787}
   - component: {fileID: 1248420786}
   - component: {fileID: 1248420785}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: number
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2834,9 +2957,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b9af4d0cdfe6644ab4ac0255a8f4396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.EcgWaveformSource
-  data: {fileID: 1764080586}
+  data: {fileID: 397717374}
   ecgJson: {fileID: 4900000, guid: 4a0a4aacd388a4b4d89cef95ad94acca, type: 3}
-  startingHr: 75
+  fallbackHr: 75
 --- !u!4 &1302743495
 Transform:
   m_ObjectHideFlags: 0
@@ -2852,6 +2975,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1854943581}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1525092270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c300108eb8c4b144a3c57c88e71fca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pulse.Unity.PulseData
+  timeStampList:
+    list: []
+  valuesTable:
+  - list: []
+  - list: []
+  - list: []
+  - list: []
+  - list: []
+  - list: []
+  - list: []
 --- !u!1 &1604168861
 GameObject:
   m_ObjectHideFlags: 0
@@ -2977,7 +3122,7 @@ GameObject:
   - component: {fileID: 1605435474}
   - component: {fileID: 1605435476}
   - component: {fileID: 1605435475}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3054,7 +3199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1715094464}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3093,7 +3238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1750263373}
   - component: {fileID: 1750263374}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Vitals Monitor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3128,23 +3273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97028b25c0c010a408caaba631b104b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.VitalsDataSource
-  data: {fileID: 77968999}
---- !u!114 &1764080586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c300108eb8c4b144a3c57c88e71fca4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pulse.Unity.PulseData
-  timeStampList:
-    list: []
-  valuesTable:
-  - list: []
+  data: {fileID: 1525092270}
 --- !u!1 &1787343759
 GameObject:
   m_ObjectHideFlags: 0
@@ -3156,7 +3285,7 @@ GameObject:
   - component: {fileID: 1787343760}
   - component: {fileID: 1787343762}
   - component: {fileID: 1787343761}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3234,7 +3363,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1816593074}
   - component: {fileID: 1816593079}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3429,7 +3558,7 @@ GameObject:
   - component: {fileID: 1868589357}
   - component: {fileID: 1868589356}
   - component: {fileID: 1868589355}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: mean
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3638,7 +3767,7 @@ GameObject:
   - component: {fileID: 1994155110}
   - component: {fileID: 1994155109}
   - component: {fileID: 1994155108}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3829,7 +3958,7 @@ GameObject:
   - component: {fileID: 2056568342}
   - component: {fileID: 2056568341}
   - component: {fileID: 2056568340}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: number
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4038,7 +4167,7 @@ GameObject:
   - component: {fileID: 2116900058}
   - component: {fileID: 2116900057}
   - component: {fileID: 2116900056}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Temp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4225,7 +4354,7 @@ GameObject:
   - component: {fileID: 2122403186}
   - component: {fileID: 2122403188}
   - component: {fileID: 2122403187}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
