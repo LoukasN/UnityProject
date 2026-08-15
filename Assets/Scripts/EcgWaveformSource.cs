@@ -5,9 +5,6 @@ using Pulse.Unity;
 
 namespace DefaultNamespace
 {
-    // Drives the ECG line renderer by replaying a recorded waveform (from
-    // StandardECG.json) in a loop, paced to a heart rate. Only the "normal"
-    // (no "Type") waveform is used for now — VFib/VTach swapping is parked.
     [ExecuteInEditMode]
     public class EcgWaveformSource : PulseDataSource
     {
@@ -29,8 +26,6 @@ namespace DefaultNamespace
 
         void Start()
         {
-            // Same scene, but the JSON may not have parsed yet — CurrentHr stays 0
-            // until it does, and SetHeartRate ignores that.
             vitals = FindFirstObjectByType<VitalsDataSource>();
         }
 
@@ -47,8 +42,6 @@ namespace DefaultNamespace
             LoadSamples();
         }
 
-        // Ignores non-positive values, so a scenario that omits hr (or hasn't
-        // loaded yet) leaves the last good pacing rather than freezing the trace.
         public void SetHeartRate(float hr)
         {
             if (hr > 0)
@@ -60,7 +53,6 @@ namespace DefaultNamespace
             if (!Application.isPlaying || samples == null || samples.Count == 0)
                 return;
 
-            // Track the scenario's live hr, including mid-scenario vitals_update changes.
             if (vitals != null)
                 SetHeartRate(vitals.CurrentHr);
 
@@ -89,7 +81,6 @@ namespace DefaultNamespace
             var root = JObject.Parse(ecgJson.text);
             foreach (var waveform in (JArray)root["Waveforms"])
             {
-                // The normal sinus rhythm waveform is the one with no "Type".
                 if (waveform["Type"] != null)
                     continue;
 
