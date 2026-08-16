@@ -23,11 +23,18 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI endDecisionPathText;
     public TextMeshProUGUI endMissedDocsText;
 
+    public GameObject objectivePanel;
+    public TextMeshProUGUI objectiveText;
+
     public GameObject toastPanel;
     public TextMeshProUGUI toastText;
+    public UnityEngine.UI.Image toastBackground;
+    public Color toastDefaultColor = Color.black;
+    public Color toastDangerColor = Color.red;
     public float toastDuration = 5f;
 
     Coroutine toastCoroutine;
+    bool hasObjectiveText;
 
     public PlayerMovement playerMovement;
 
@@ -69,6 +76,7 @@ public class UIManager : MonoBehaviour
     public void OpenVitalsMonitor()
     {
         vitalsMonitorPanel.SetActive(true);
+        objectivePanel.SetActive(false);
 
         playerMovement.canMove = false;
 
@@ -79,7 +87,7 @@ public class UIManager : MonoBehaviour
     public void CloseVitalsMonitor()
     {
         vitalsMonitorPanel.SetActive(false);
-
+        RefreshObjectiveVisibility();
 
         playerMovement.canMove = true;
 
@@ -90,6 +98,7 @@ public class UIManager : MonoBehaviour
     public void OpenEHR()
     {
         EHRPanel.SetActive(true);
+        objectivePanel.SetActive(false);
 
         playerMovement.canMove = false;
 
@@ -100,7 +109,7 @@ public class UIManager : MonoBehaviour
     public void CloseEHR()
     {
         EHRPanel.SetActive(false);
-
+        RefreshObjectiveVisibility();
 
         playerMovement.canMove = true;
 
@@ -111,6 +120,7 @@ public class UIManager : MonoBehaviour
     public void OpenStartScreen()
     {
         startScreenPanel.SetActive(true);
+        objectivePanel.SetActive(false);
 
         playerMovement.canMove = false;
 
@@ -121,6 +131,7 @@ public class UIManager : MonoBehaviour
     public void CloseStartScreen()
     {
         startScreenPanel.SetActive(false);
+        RefreshObjectiveVisibility();
 
         playerMovement.canMove = true;
         GameTimer.Instance.StartTimer();
@@ -133,6 +144,7 @@ public class UIManager : MonoBehaviour
     {
         startScreenPanel.SetActive(false);
         scenarioSelectPanel.SetActive(true);
+        objectivePanel.SetActive(false);
 
         playerMovement.canMove = false;
 
@@ -154,6 +166,7 @@ public class UIManager : MonoBehaviour
         endMissedDocsText.text = missedDocs.Count > 0 ? string.Join("\n", missedDocs) : "None";
 
         endScreenPanel.SetActive(true);
+        objectivePanel.SetActive(false);
 
         playerMovement.canMove = false;
         GameTimer.Instance.Pause();
@@ -171,7 +184,24 @@ public class UIManager : MonoBehaviour
         OpenStartScreen();
     }
 
+    public void SetObjectiveText(string text)
+    {
+        objectiveText.text = text;
+        hasObjectiveText = !string.IsNullOrEmpty(text);
+        RefreshObjectiveVisibility();
+    }
+
+    void RefreshObjectiveVisibility()
+    {
+        objectivePanel.SetActive(hasObjectiveText);
+    }
+
     public void ShowToast(string message)
+    {
+        ShowToast(message, false);
+    }
+
+    public void ShowToast(string message, bool isDanger)
     {
         if (string.IsNullOrEmpty(message))
             return;
@@ -180,6 +210,7 @@ public class UIManager : MonoBehaviour
             StopCoroutine(toastCoroutine);
 
         toastText.text = message;
+        toastBackground.color = isDanger ? toastDangerColor : toastDefaultColor;
         toastPanel.SetActive(true);
 
         toastCoroutine = StartCoroutine(HideToastAfterDelay());
