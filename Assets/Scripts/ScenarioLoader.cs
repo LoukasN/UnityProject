@@ -6,17 +6,6 @@ public class ScenarioLoader : MonoBehaviour
 {
     private Scenario currentScenario;
     public Scenario CurrentScenario => currentScenario;
-
-    void Start()
-    {
-        Debug.Log("Starting Scenario...");
-        string[] filePath = GetScenarios();
-        if (filePath.Length > 0)
-        {
-            LoadScenario(filePath[0]);
-        }
-    }
-
     public string[] GetScenarios()
     {
         return Directory.GetFiles(Application.streamingAssetsPath, "*.json");

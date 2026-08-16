@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI startDescriptionText;
     public TextMeshProUGUI startGoalsText;
 
+    public GameObject scenarioSelectPanel;
+
     public GameObject endScreenPanel;
     public TextMeshProUGUI endTitleText;
     public TextMeshProUGUI endScoreText;
@@ -33,10 +35,9 @@ public class UIManager : MonoBehaviour
     {
         playerMovement = FindFirstObjectByType<PlayerMovement>();
 
-        OpenStartScreen();
+        OpenScenarioSelect();
 
         StartCoroutine(PushInitialVitalsWhenReady());
-        StartCoroutine(PopulateStartScreenWhenReady());
     }
 
     IEnumerator PushInitialVitalsWhenReady()
@@ -50,13 +51,9 @@ public class UIManager : MonoBehaviour
         vitalsDataSource.UpdateVitals(scenarioLoader.CurrentScenario.initialState.vitals);
     }
 
-    IEnumerator PopulateStartScreenWhenReady()
+    public void RefreshStartScreenText()
     {
         var scenarioLoader = FindFirstObjectByType<ScenarioLoader>();
-
-        while (scenarioLoader.CurrentScenario == null)
-            yield return null;
-
         var meta = scenarioLoader.CurrentScenario.meta;
 
         startTitleText.text = meta.title;
@@ -130,6 +127,23 @@ public class UIManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    public void OpenScenarioSelect()
+    {
+        startScreenPanel.SetActive(false);
+        scenarioSelectPanel.SetActive(true);
+
+        playerMovement.canMove = false;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void CloseScenarioSelect()
+    {
+        scenarioSelectPanel.SetActive(false);
+        OpenStartScreen();
     }
 
     public void ShowDebrief(string endText, int score, List<string> decisionPath, List<string> missedDocs)
