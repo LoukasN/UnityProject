@@ -7,8 +7,6 @@ namespace DefaultNamespace
     [ExecuteInEditMode]
     public class VitalsDataSource : PulseDataSource
     {
-        // Field order here must match the dataFieldIndex you set on each
-        // PulseDataNumberRenderer in the Inspector.
         const int FIELD_HR = 0;
         const int FIELD_BP_SYSTOLIC = 1;
         const int FIELD_BP_DIASTOLIC = 2;
@@ -17,9 +15,6 @@ namespace DefaultNamespace
         const int FIELD_RR = 5;
         const int FIELD_TEMP = 6;
 
-        // Current values, kept around so partial updates (a node only
-        // changing spo2 and hr, say) can be merged on top instead of
-        // needing a full Vitals object every time.
         double currentHr;
         double currentSystolic;
         double currentDiastolic;
@@ -53,7 +48,6 @@ namespace DefaultNamespace
             };
         }
 
-        // Called once with the scenario's initial_state.vitals at scene start.
         public void UpdateVitals(Vitals v)
         {
             var (systolic, diastolic) = ParseBp(v.bp);
@@ -67,10 +61,6 @@ namespace DefaultNamespace
 
             PushAll();
         }
-
-        // Called by the rule engine whenever a node/effect only changes some
-        // vitals (e.g. a decision's "vitals_update": { "spo2": 85, "hr": 120 }).
-        // Any field not present in the dictionary keeps its last value.
         public void ApplyVitalsUpdate(Dictionary<string, int> updates)
         {
             if (updates == null)
@@ -121,7 +111,6 @@ namespace DefaultNamespace
 
         (int systolic, int diastolic) ParseBp(string bp)
         {
-            // "125/80" -> 125, 80
             var parts = bp.Split('/');
             return (int.Parse(parts[0]), int.Parse(parts[1]));
         }
