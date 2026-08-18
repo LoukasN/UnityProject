@@ -144,7 +144,7 @@ public class UIManager : MonoBehaviour
 
         GameTimer.Instance.ResetTimer();
 
-        OpenStartScreen();
+        OpenScenarioSelect();
     }
 
     public void OpenVitalsMonitor()
