@@ -28,9 +28,12 @@ public class EhrPanelController : MonoBehaviour {
             return;
         }
 
+        // No gate on this node: nothing is required, so nothing is editable. Unlocking
+        // every field here would let the player pre-fill all forms early and auto-pass
+        // every later gate, since the engine's documentedFields set is never cleared.
         if (activeNode.gateRequirements?.requiredForms == null) {
             foreach (var form in Forms)
-                form.SetAllFieldsRequired();
+                form.SetRequiredFields(null);
 
             return;
         }
@@ -60,13 +63,17 @@ public class EhrPanelController : MonoBehaviour {
             return;
         }
 
+        // Nothing to submit outside a gate - close instead of leaving a dead button.
+        if (activeNode.type != "gate") {
+            UIManager.Instance.CloseEHR();
+            return;
+        }
+
         // Check that all required fields have been filled.
+        // Default-colour toast: only global_rules with "style": "danger" go red.
         foreach (var form in Forms) {
             if (!form.RequiredFieldsFilled()) {
-                UIManager.Instance.ShowToast(
-                    activeNode.feedbackBlocked,
-                    true);
-
+                UIManager.Instance.ShowToast(activeNode.feedbackBlocked);
                 return;
             }
         }

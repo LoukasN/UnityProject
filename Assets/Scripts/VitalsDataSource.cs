@@ -81,6 +81,12 @@ public class VitalsDataSource : PulseDataSource {
             case "bp_diastolic":
                 currentDiastolic = (double)kv.Value;
                 break;
+            case "bp":
+                // Same "120/80" form initial_state.vitals uses.
+                var (systolic, diastolic) = ParseBp((string)kv.Value);
+                currentSystolic = systolic;
+                currentDiastolic = diastolic;
+                break;
             default:
                 Debug.LogWarning($"VitalsDataSource: unknown vitals_update key '{kv.Key}', ignored.");
                 break;
@@ -113,8 +119,16 @@ public class VitalsDataSource : PulseDataSource {
     }
 
     (int systolic, int diastolic) ParseBp(string bp) {
-        var parts = bp.Split('/');
-        return (int.Parse(parts[0]), int.Parse(parts[1]));
+        var parts = bp == null ? null : bp.Split('/');
+
+        if (parts == null || parts.Length != 2 ||
+            !int.TryParse(parts[0].Trim(), out int systolic) ||
+            !int.TryParse(parts[1].Trim(), out int diastolic)) {
+            Debug.LogWarning($"VitalsDataSource: could not parse bp '{bp}', expected \"120/80\".");
+            return (0, 0);
+        }
+
+        return (systolic, diastolic);
     }
 
     public double GetVital(string name) {

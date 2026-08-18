@@ -21,6 +21,18 @@ public class Scenario {
     public Rules rules;
 
     public List<Node> nodes;
+
+    public Logging logging;
+}
+
+public class Logging {
+    public bool enabled;
+
+    [JsonProperty("log_events")]
+    public List<string> logEvents;
+
+    [JsonProperty("export_format")]
+    public string exportFormat;
 }
 
 public class Meta {

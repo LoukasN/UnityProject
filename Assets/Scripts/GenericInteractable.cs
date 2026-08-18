@@ -27,7 +27,6 @@ public class GenericInteractable : MonoBehaviour, InterfaceInteractable {
     [SerializeField]
     bool interactionEnabled = true;
 
-    ScenarioLoader scenarioLoader;
     Color scenarioGlowColor;
     bool isHovered;
 
@@ -67,6 +66,9 @@ public class GenericInteractable : MonoBehaviour, InterfaceInteractable {
         }
 
         var option = GetActiveOption();
+
+        if (ScenarioEngine.Instance != null)
+            ScenarioEngine.Instance.LogHotspot(hotspotId);
 
         if (option != null) {
             HandleOption(option);
@@ -109,13 +111,6 @@ public class GenericInteractable : MonoBehaviour, InterfaceInteractable {
 
     public void SetInteractionEnabled(bool enabled) {
         interactionEnabled = enabled;
-    }
-
-    ScenarioLoader GetScenarioLoader() {
-        if (scenarioLoader == null)
-            scenarioLoader = FindFirstObjectByType<ScenarioLoader>();
-
-        return scenarioLoader;
     }
 }
 }

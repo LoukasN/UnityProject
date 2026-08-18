@@ -22,8 +22,8 @@ public class ScenarioLoader : MonoBehaviour {
             Debug.Log($"Loaded scenario: {currentScenario.meta.title}");
             Debug.Log($"Schema version: {currentScenario.schemaVersion}");
 
-            GameTimer.Instance.StartTimer();
-            Debug.Log("Timer Started");
+            // Timer starts in UIManager.CloseStartScreen(), when gameplay actually begins -
+            // starting it here ran the clock while the player was still reading the briefing.
 
             return true;
         } catch (JsonException ex) {
