@@ -60,7 +60,7 @@ public class Vitals {
 public class Ui {
     [JsonProperty("active_hotspots")]
     public List<string> activeHotspots;
-    
+
     [JsonProperty("monitor_alert")]
     public bool monitorAlert;
 }
@@ -70,21 +70,8 @@ public class Hotspot {
     public string label;
 }
 
-public class EhrConfig
-{
-    public FormsConfig forms;
-}
-
-public class FormsConfig
-{
-    [JsonProperty("assessment_form")]
-    public Form assessmentForm;
-
-    [JsonProperty("intervention_form")]
-    public Form interventionForm;
-
-    [JsonProperty("communication_log")]
-    public Form communicationLog;
+public class EhrConfig {
+    public Dictionary<string, Form> forms;
 }
 
 public class Form {
@@ -103,7 +90,6 @@ public class GlobalRule {
     public List<Effect> effects;
 }
 
-
 public class Effect {
     public string type;
     // Any of the below can be null
@@ -117,21 +103,23 @@ public class Node {
     public string id;
     public string type;
     public string text;
+    // Only on gates
+    public string description;
 
     [JsonProperty("next_node_id")]
     public string nextNodeId;
 
     public List<Option> options;
     public Timeout timeout;
-    
+
     [JsonProperty("gate_requirements")]
-    public GateRequirements gateRequirements; 
+    public GateRequirements gateRequirements;
 
     [JsonProperty("feedback_blocked")]
-    public string feedbackBlocked; 
+    public string feedbackBlocked;
 
     [JsonProperty("feedback_success")]
-    public string feedbackSuccess; 
+    public string feedbackSuccess;
 
     [JsonProperty("effects_on_pass")]
     public Effects effectsOnPass;
@@ -163,7 +151,7 @@ public class Effects {
     public Dictionary<string, bool> stateUpdate;
 
     [JsonProperty("vitals_update")]
-    public Dictionary<string, int> vitalsUpdate;
+    public Dictionary<string, JValue> vitalsUpdate;
 }
 
 public class Timeout {

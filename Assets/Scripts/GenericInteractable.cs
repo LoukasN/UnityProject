@@ -1,122 +1,121 @@
 using UnityEngine;
 
-namespace DefaultNamespace
-{
-    public class GenericInteractable : MonoBehaviour, InterfaceInteractable
-    {
-        public enum InteractableType
-        {
-            None,
-            VitalsMonitor,
-            EHR
-        }
+namespace DefaultNamespace {
+public class GenericInteractable : MonoBehaviour, InterfaceInteractable {
+    public enum InteractableType {
+        None,
+        VitalsMonitor,
+        EHR
+    }
 
-        [SerializeField] string hotspotId;
+    [SerializeField]
+    string hotspotId;
+    public string HotspotId => hotspotId;
 
-        [SerializeField] string idleMessage = "Press (E) to interact";
+    [SerializeField]
+    string idleMessage = "Press (E) to interact";
 
-        [SerializeField] InteractableType interactableType;
+    [SerializeField]
+    InteractableType interactableType;
 
-        [SerializeField] bool opensPanel = true;
+    [SerializeField]
+    bool opensPanel = true;
 
-        [SerializeField] Outline outline;
+    [SerializeField]
+    Outline outline;
 
-        ScenarioLoader scenarioLoader;
-        Color scenarioGlowColor;
-        bool isHovered;
+    [SerializeField]
+    bool interactionEnabled = true;
 
-        void Start()
-        {
-            if (outline != null)
-                scenarioGlowColor = outline.OutlineColor;
-        }
+    ScenarioLoader scenarioLoader;
+    Color scenarioGlowColor;
+    bool isHovered;
 
-        void Update()
-        {
-            if (outline == null)
-                return;
+    void Start() {
+        if (outline != null)
+            scenarioGlowColor = outline.OutlineColor;
+    }
 
-            bool scenarioActive = GetActiveOption() != null;
-            bool shouldGlow = InteractionGlowSettings.Enabled && (isHovered || scenarioActive);
+    void Update() {
+        if (outline == null)
+            return;
 
-            if (outline.enabled != shouldGlow)
-                outline.enabled = shouldGlow;
+        bool scenarioActive = GetActiveOption() != null;
+        bool shouldGlow = InteractionGlowSettings.Enabled && (isHovered || scenarioActive);
 
-            if (shouldGlow)
-                outline.OutlineColor = isHovered ? Color.white : scenarioGlowColor;
-        }
+        if (outline.enabled != shouldGlow)
+            outline.enabled = shouldGlow;
 
-        public void SetHovered(bool hovered)
-        {
-            isHovered = hovered;
-        }
+        if (shouldGlow)
+            outline.OutlineColor = isHovered ? Color.white : scenarioGlowColor;
+    }
 
-        public string InteractMessage
-        {
-            get
-            {
-                var option = GetActiveOption();
-                return option != null ? $"{option.label} (E)" : idleMessage;
-            }
-        }
+    public void SetHovered(bool hovered) {
+        isHovered = hovered;
+    }
 
-        public void Interact()
-        {
+    public string InteractMessage {
+        get {
             var option = GetActiveOption();
-
-            if (option != null)
-            {
-                HandleOption(option);
-            }
-            else
-            {
-                UIManager.Instance.ShowToast($"{hotspotId}: not needed right now.");
-            }
-
-            if (opensPanel)
-                OpenPanel();
-        }
-
-        Option GetActiveOption()
-        {
-            var loader = GetScenarioLoader();
-            if (loader == null || loader.CurrentScenario == null)
-                return null;
-
-            Node currentNode = null; // TODO: once ScenarioLoader exposes the rule engine's current node (e.g. loader.CurrentNode), swap this line for it.
-
-            return ScenarioLookup.GetOptionForHotspot(currentNode, hotspotId);
-        }
-
-        void HandleOption(Option option)
-        {
-            UIManager.Instance.ShowToast(option.effects?.toast);
-
-            if (option.effects?.vitalsUpdate != null)
-            {
-                var vitalsSource = FindFirstObjectByType<VitalsDataSource>();
-                vitalsSource?.ApplyVitalsUpdate(option.effects.vitalsUpdate);
-            }
-        }
-
-        void OpenPanel()
-        {
-            if (interactableType == InteractableType.VitalsMonitor)
-            {
-                UIManager.Instance.OpenVitalsMonitor();
-            }
-            else if (interactableType == InteractableType.EHR)
-            {
-                UIManager.Instance.OpenEHR();
-            }
-        }
-
-        ScenarioLoader GetScenarioLoader()
-        {
-            if (scenarioLoader == null)
-                scenarioLoader = FindFirstObjectByType<ScenarioLoader>();
-
-            return scenarioLoader;
+            return option != null ? $"{option.label} (E)" : idleMessage;
         }
     }
+
+    public void Interact() {
+        var option = GetActiveOption();
+
+        if (!interactionEnabled) {
+            return;
+        }
+
+        if (option != null) {
+            HandleOption(option);
+        } else {
+            UIManager.Instance.ShowToast($"{hotspotId}: not needed right now.");
+        }
+
+        if (opensPanel)
+            OpenPanel();
+    }
+
+    Option GetActiveOption() {
+        if (ScenarioEngine.Instance == null) {
+            Debug.LogError("GenericInteractable: ScenarioEngine.Instance is null.");
+            return null;
+        }
+        Node currentNode = ScenarioEngine.Instance.CurrentNode;
+        if (currentNode == null) {
+            return null;
+        }
+        return ScenarioLookup.GetOptionForHotspot(currentNode, hotspotId);
+    }
+
+    void HandleOption(Option option) {
+        if (option == null) {
+            Debug.LogError($"GenericInteractable: Option is null for hotspot {hotspotId}");
+            return;
+        }
+        Debug.Log($"HOTSPOT OPTION: {hotspotId} -> {option.label} -> {option.nextNodeId}");
+        ScenarioEngine.Instance.ChooseOption(option);
+    }
+
+    void OpenPanel() {
+        if (interactableType == InteractableType.VitalsMonitor) {
+            UIManager.Instance.OpenVitalsMonitor();
+        } else if (interactableType == InteractableType.EHR) {
+            UIManager.Instance.OpenEHR();
+        }
+    }
+
+    public void SetInteractionEnabled(bool enabled) {
+        interactionEnabled = enabled;
+    }
+
+    ScenarioLoader GetScenarioLoader() {
+        if (scenarioLoader == null)
+            scenarioLoader = FindFirstObjectByType<ScenarioLoader>();
+
+        return scenarioLoader;
+    }
+}
 }

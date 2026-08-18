@@ -2,25 +2,20 @@ using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
 
-public class ScenarioLoader : MonoBehaviour
-{
+public class ScenarioLoader : MonoBehaviour {
     private Scenario currentScenario;
     public Scenario CurrentScenario => currentScenario;
-    public string[] GetScenarios()
-    {
+    public string[] GetScenarios() {
         return Directory.GetFiles(Application.streamingAssetsPath, "*.json");
     }
 
-    public bool LoadScenario(string path)
-    {
-        if (!File.Exists(path))
-        {
+    public bool LoadScenario(string path) {
+        if (!File.Exists(path)) {
             Debug.LogError("File not found: " + path);
             return false;
         }
 
-        try
-        {
+        try {
             string text = File.ReadAllText(path);
             currentScenario = JsonConvert.DeserializeObject<Scenario>(text);
 
@@ -31,9 +26,7 @@ public class ScenarioLoader : MonoBehaviour
             Debug.Log("Timer Started");
 
             return true;
-        }
-        catch (JsonException ex)
-        {
+        } catch (JsonException ex) {
             Debug.LogError($"Failed to parse {path}: {ex.Message}");
             return false;
         }
