@@ -4,24 +4,20 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScenarioSelectManager : MonoBehaviour
-{
+public class ScenarioSelectManager : MonoBehaviour {
     public GameObject scenarioButtonPrefab;
     public Transform listContainer;
 
-    void OnEnable()
-    {
+    void OnEnable() {
         PopulateList();
     }
 
-    void PopulateList()
-    {
+    void PopulateList() {
         foreach (Transform child in listContainer)
             Destroy(child.gameObject);
 
         var loader = FindFirstObjectByType<ScenarioLoader>();
-        foreach (string path in loader.GetScenarios())
-        {
+        foreach (string path in loader.GetScenarios()) {
             string capturedPath = path;
             Scenario scenario = JsonConvert.DeserializeObject<Scenario>(File.ReadAllText(path));
 
@@ -33,8 +29,7 @@ public class ScenarioSelectManager : MonoBehaviour
         }
     }
 
-    void LoadScenario(string path)
-    {
+    void LoadScenario(string path) {
         var loader = FindFirstObjectByType<ScenarioLoader>();
         loader.LoadScenario(path);
 

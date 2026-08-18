@@ -1,7 +1,5 @@
-public static class ScenarioLookup
-{
-    public static Option GetOptionForHotspot(Node node, string hotspotId)
-    {
+public static class ScenarioLookup {
+    public static Option GetOptionForHotspot(Node node, string hotspotId) {
         if (node?.options == null || hotspotId == null)
             return null;
 

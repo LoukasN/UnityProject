@@ -73,22 +73,20 @@ public class ScenarioEngine : MonoBehaviour {
         return null;
     }
 
-    public void GoToNode(string nodeId)
-    {
+    public void GoToNode(string nodeId) {
         CancelInvoke(nameof(GoToNode));
-    
+
         currentNode = FindNode(nodeId);
-    
+
         if (currentNode == null)
             return;
-    
+
         StartCoroutine(EnterNodeAfterDelay(currentNode));
     }
-    
-    IEnumerator EnterNodeAfterDelay(Node node)
-    {
+
+    IEnumerator EnterNodeAfterDelay(Node node) {
         yield return new WaitForSeconds(nodeTransitionDelay);
-    
+
         Debug.Log("NODE ENTER: " + node.id);
         Log("NODE_ENTER", node.id);
         EnterNode(node);
@@ -99,26 +97,21 @@ public class ScenarioEngine : MonoBehaviour {
 
         if (node.type == "message") {
             StartCoroutine(AutoAdvanceMessage(node));
-        }
-        else if (node.type == "decision") {
+        } else if (node.type == "decision") {
             if (node.timeout != null) {
                 timeoutRemaining = node.timeout.seconds;
                 timeoutArmed = true;
             }
-        }
-        else if (node.type == "gate") {
+        } else if (node.type == "gate") {
             // Something here
-        }
-        else if (node.type == "end") {
+        } else if (node.type == "end") {
             FinishScenario(node);
-        }
-        else {
+        } else {
             Debug.LogWarning("Unknown node type: " + node.type);
         }
     }
 
-    IEnumerator AutoAdvanceMessage(Node node)
-    {
+    IEnumerator AutoAdvanceMessage(Node node) {
         yield return new WaitForSeconds(3f);
         GoToNode(node.nextNodeId);
     }
@@ -131,7 +124,7 @@ public class ScenarioEngine : MonoBehaviour {
     }
 
     public void ChooseOption(Option option) {
-  Debug.Log("PATIENT CHOICE CLICKED: " + option.label);
+        Debug.Log("PATIENT CHOICE CLICKED: " + option.label);
         timeoutArmed = false;
         decisionPath.Add($"{currentNode.id}: {option.label}");
         Log("OPTION_SELECTED", option.id);
@@ -169,8 +162,7 @@ public class ScenarioEngine : MonoBehaviour {
             foreach (var (key, value) in effects.stateUpdate) {
                 if (key.StartsWith("flags.")) {
                     flags[key.Substring("flags.".Length)] = value;
-                }
-                else {
+                } else {
                     Debug.LogWarning("Unknown state_update key: " + key);
                 }
             }
@@ -209,8 +201,7 @@ public class ScenarioEngine : MonoBehaviour {
                 foreach (var effect in rule.effects) {
                     ApplyRuleEffect(effect);
                 }
-            }
-            else if (!conditionsMet && activeRules.Contains(rule.id)) {
+            } else if (!conditionsMet && activeRules.Contains(rule.id)) {
                 activeRules.Remove(rule.id);
                 foreach (var effect in rule.effects) {
                     if (effect.type == "ui_visual") {
@@ -222,12 +213,18 @@ public class ScenarioEngine : MonoBehaviour {
     }
 
     bool EvaluateCondition(string op, double actual, double threshold) {
-        if (op == "lt") return actual < threshold;
-        if (op == "lte") return actual <= threshold;
-        if (op == "gt") return actual > threshold;
-        if (op == "gte") return actual >= threshold;
-        if (op == "eq") return actual == threshold;
-        if (op == "neq") return actual != threshold;
+        if (op == "lt")
+            return actual < threshold;
+        if (op == "lte")
+            return actual <= threshold;
+        if (op == "gt")
+            return actual > threshold;
+        if (op == "gte")
+            return actual >= threshold;
+        if (op == "eq")
+            return actual == threshold;
+        if (op == "neq")
+            return actual != threshold;
         Debug.LogWarning("Unknown condition operator: " + op);
         return false;
     }
@@ -248,11 +245,9 @@ public class ScenarioEngine : MonoBehaviour {
     void ApplyRuleEffect(Effect effect) {
         if (effect.type == "ui_visual") {
             // HotspotVisual.Apply(effect.target, effect.state);
-        }
-        else if (effect.type == "ui_toast") {
+        } else if (effect.type == "ui_toast") {
             UIManager.Instance.ShowToast(effect.message);
-        }
-        else {
+        } else {
             Debug.LogWarning("Unknown rule effect type: " + effect.type);
         }
     }
@@ -268,19 +263,19 @@ public class ScenarioEngine : MonoBehaviour {
         }
     }
 
-    string DescribeField(string formId, string fieldId){
+    string DescribeField(string formId, string fieldId) {
         Form form = null;
-    
+
         if (scenario.ehrConfig != null &&
             scenario.ehrConfig.forms != null &&
-            scenario.ehrConfig.forms.TryGetValue(formId, out Form foundForm)){
+            scenario.ehrConfig.forms.TryGetValue(formId, out Form foundForm)) {
             form = foundForm;
         }
-    
+
         if (form != null && form.fields != null && form.fields.Contains(fieldId)) {
             return form.title + " => " + fieldId;
         }
-    
+
         return formId + "." + fieldId;
     }
 
@@ -354,7 +349,7 @@ public class ScenarioEngine : MonoBehaviour {
     }
 
     void Log(string eventType, string detail) {
-    return;
+        return;
         // if (scenario == null || scenario.logging == null || !scenario.logging.enabled) {
         //     return;
         // }
@@ -366,7 +361,7 @@ public class ScenarioEngine : MonoBehaviour {
     }
 
     void ExportLog() {
-    return;
+        return;
         // string path = Path.Combine(Application.persistentDataPath, scenario.meta.id + "_log.json");
         // File.WriteAllText(path, JsonConvert.SerializeObject(logEntries, Formatting.Indented));
         // Debug.Log("Action log exported to: " + path);

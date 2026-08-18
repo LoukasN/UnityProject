@@ -60,7 +60,7 @@ public class Vitals {
 public class Ui {
     [JsonProperty("active_hotspots")]
     public List<string> activeHotspots;
-    
+
     [JsonProperty("monitor_alert")]
     public bool monitorAlert;
 }
@@ -90,7 +90,6 @@ public class GlobalRule {
     public List<Effect> effects;
 }
 
-
 public class Effect {
     public string type;
     // Any of the below can be null
@@ -112,15 +111,15 @@ public class Node {
 
     public List<Option> options;
     public Timeout timeout;
-    
+
     [JsonProperty("gate_requirements")]
-    public GateRequirements gateRequirements; 
+    public GateRequirements gateRequirements;
 
     [JsonProperty("feedback_blocked")]
-    public string feedbackBlocked; 
+    public string feedbackBlocked;
 
     [JsonProperty("feedback_success")]
-    public string feedbackSuccess; 
+    public string feedbackSuccess;
 
     [JsonProperty("effects_on_pass")]
     public Effects effectsOnPass;
