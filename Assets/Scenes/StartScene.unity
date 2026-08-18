@@ -192,6 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f1a3094ba575cd5a84d391645f5fc1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioEngine
+  nodeTransitionDelay: 1.5
 --- !u!4 &781403624
 Transform:
   m_ObjectHideFlags: 0
@@ -509,7 +510,7 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 966250179}
   - {fileID: 373291913}
+  - {fileID: 966250179}
   - {fileID: 781403624}
   - {fileID: 1604324692}

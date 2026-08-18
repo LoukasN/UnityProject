@@ -84,26 +84,25 @@ namespace DefaultNamespace
                 OpenPanel();
         }
 
-        Option GetActiveOption()
-        {
-            var loader = GetScenarioLoader();
-            if (loader == null || loader.CurrentScenario == null)
+        Option GetActiveOption(){
+            if (ScenarioEngine.Instance == null) {
+                Debug.LogError("GenericInteractable: ScenarioEngine.Instance is null.");
                 return null;
-
-            Node currentNode = null; // TODO: once ScenarioLoader exposes the rule engine's current node (e.g. loader.CurrentNode), swap this line for it.
-
+            }
+            Node currentNode = ScenarioEngine.Instance.CurrentNode;
+            if (currentNode == null) {
+                return null;
+            }
             return ScenarioLookup.GetOptionForHotspot(currentNode, hotspotId);
         }
 
-        void HandleOption(Option option)
-        {
-            UIManager.Instance.ShowToast(option.effects?.toast);
-
-            if (option.effects?.vitalsUpdate != null)
-            {
-                var vitalsSource = FindFirstObjectByType<VitalsDataSource>();
-                vitalsSource?.ApplyVitalsUpdate(option.effects.vitalsUpdate);
+        void HandleOption(Option option){
+            if (option == null) {
+                Debug.LogError($"GenericInteractable: Option is null for hotspot {hotspotId}");
+                return;
             }
+            Debug.Log($"HOTSPOT OPTION: {hotspotId} -> {option.label} -> {option.nextNodeId}");
+            ScenarioEngine.Instance.ChooseOption(option);
         }
 
         void OpenPanel()

@@ -101,17 +101,16 @@ public class ScenarioEngine : MonoBehaviour {
             StartCoroutine(AutoAdvanceMessage(node));
         }
         else if (node.type == "decision") {
-        // Something here
             if (node.timeout != null) {
                 timeoutRemaining = node.timeout.seconds;
                 timeoutArmed = true;
             }
         }
         else if (node.type == "gate") {
-        // Something here
+            // Something here
         }
         else if (node.type == "end") {
-        // Something here
+            FinishScenario(node);
         }
         else {
             Debug.LogWarning("Unknown node type: " + node.type);
@@ -132,6 +131,7 @@ public class ScenarioEngine : MonoBehaviour {
     }
 
     public void ChooseOption(Option option) {
+  Debug.Log("PATIENT CHOICE CLICKED: " + option.label);
         timeoutArmed = false;
         decisionPath.Add($"{currentNode.id}: {option.label}");
         Log("OPTION_SELECTED", option.id);
