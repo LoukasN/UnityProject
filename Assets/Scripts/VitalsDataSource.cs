@@ -114,5 +114,19 @@ namespace DefaultNamespace
             var parts = bp.Split('/');
             return (int.Parse(parts[0]), int.Parse(parts[1]));
         }
+
+        public double GetVital(string name){
+            switch (name){
+                case "hr": return currentHr;
+                case "spo2": return currentSpo2;
+                case "rr": return currentRr;
+                case "temp": return currentTemp;
+                case "bp_systolic": return currentSystolic;
+                case "bp_diastolic": return currentDiastolic;
+                default:
+                    Debug.LogWarning($"VitalsDataSource: unknown vital '{name}' requested, returning 0.");
+                    return 0;
+            }
+        }
     }
 }
