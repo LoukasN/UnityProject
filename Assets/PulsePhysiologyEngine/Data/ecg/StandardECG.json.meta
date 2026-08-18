@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 4a0a4aacd388a4b4d89cef95ad94acca
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 139773
+  packageName: Pulse Physiology Engine
+  packageVersion: 4.3.1
+  assetPath: Assets/PulsePhysiologyEngine/Data/ecg/StandardECG.json
+  uploadId: 728075

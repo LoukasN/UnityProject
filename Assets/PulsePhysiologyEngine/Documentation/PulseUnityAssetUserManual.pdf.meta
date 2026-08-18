@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 31d80d03e8efa4b429ccad4214d533fb
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 139773
+  packageName: Pulse Physiology Engine
+  packageVersion: 4.3.1
+  assetPath: Assets/PulsePhysiologyEngine/Documentation/PulseUnityAssetUserManual.pdf
+  uploadId: 728075

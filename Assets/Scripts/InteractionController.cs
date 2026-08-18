@@ -12,9 +12,23 @@ namespace DefaultNamespace
         [SerializeField] LayerMask interactableLayers = ~0;
 
         InterfaceInteractable currentTargetInteractable;
+        PlayerMovement playerMovement;
+
+        void Start()
+        {
+            playerMovement = FindFirstObjectByType<PlayerMovement>();
+        }
 
         void Update()
         {
+            if (playerMovement != null && !playerMovement.canMove)
+            {
+                interactionText.text = string.Empty;
+                currentTargetInteractable?.SetHovered(false);
+                currentTargetInteractable = null;
+                return;
+            }
+
             UpdateCurrentInteractable();
             UpdateInteractionText();
             CheckForInteractionInput();
@@ -24,12 +38,16 @@ namespace DefaultNamespace
         {
             var ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
-            if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance,
-interactableLayers))
-                currentTargetInteractable =
-hit.collider.GetComponentInParent<InterfaceInteractable>();
-            else
-                currentTargetInteractable = null;
+            InterfaceInteractable newTarget = null;
+            if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, interactableLayers))
+                newTarget = hit.collider.GetComponentInParent<InterfaceInteractable>();
+
+            if (newTarget != currentTargetInteractable)
+            {
+                currentTargetInteractable?.SetHovered(false);
+                newTarget?.SetHovered(true);
+                currentTargetInteractable = newTarget;
+            }
         }
 
         void UpdateInteractionText()

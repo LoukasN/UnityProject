@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a88793a7f0d31894192ee266450330bb
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 139773
+  packageName: Pulse Physiology Engine
+  packageVersion: 4.3.1
+  assetPath: Assets/PulsePhysiologyEngine/Data/VitalsMonitorExampleData.csv
+  uploadId: 728075

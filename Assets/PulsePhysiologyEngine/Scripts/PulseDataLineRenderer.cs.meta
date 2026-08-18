@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 95be0a7f3ee49f7438177e97c70f28b8
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 139773
+  packageName: Pulse Physiology Engine
+  packageVersion: 4.3.1
+  assetPath: Assets/PulsePhysiologyEngine/Scripts/PulseDataLineRenderer.cs
+  uploadId: 728075

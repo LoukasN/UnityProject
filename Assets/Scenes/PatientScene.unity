@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 459631967}
   - component: {fileID: 459631966}
   - component: {fileID: 459631965}
+  - component: {fileID: 459631969}
   m_Layer: 0
   m_Name: Patient
   m_TagString: Untagged
@@ -166,8 +167,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f4de5400bec2cc7ab214f1b6ef3903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.GenericInteractable
-  spawnPrefab: {fileID: 0}
-  objectInteractMessage: Press E to interact
+  hotspotId: hs_patient
+  idleMessage: Check Vitals (E)
+  interactableType: 0
+  opensPanel: 0
+  outline: {fileID: 459631969}
 --- !u!65 &459631966
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -246,6 +250,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 459631963}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &459631969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459631963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Outline
+  outlineMode: 0
+  outlineColor: {r: 0.972549, g: 0.60784316, b: 0, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &569541784
 GameObject:
   m_ObjectHideFlags: 0

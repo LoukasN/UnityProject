@@ -5,5 +5,6 @@ namespace DefaultNamespace
     {
         string InteractMessage { get; }
         void Interact();
+        void SetHovered(bool hovered);
     }
 }

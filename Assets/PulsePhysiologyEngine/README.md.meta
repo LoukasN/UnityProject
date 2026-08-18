@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3f79846a1ab7b234ba235bddd9e07a6b
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 139773
+  packageName: Pulse Physiology Engine
+  packageVersion: 4.3.1
+  assetPath: Assets/PulsePhysiologyEngine/README.md
+  uploadId: 728075

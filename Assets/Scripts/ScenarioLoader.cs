@@ -2,23 +2,40 @@ using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
 
-public class ScenarioLoader : MonoBehaviour {
-    private Scenario scenario;
-    private string[] paths;
+public class ScenarioLoader : MonoBehaviour
+{
+    private Scenario currentScenario;
+    public Scenario CurrentScenario => currentScenario;
+    public string[] GetScenarios()
+    {
+        return Directory.GetFiles(Application.streamingAssetsPath, "*.json");
+    }
 
-    void Start() {
-        Debug.Log("Starting Scenario...");
-        path = Directory.GetFiles(Application.streamingAssetsPath, "*.json");
-        
-        if (paths.Length == 0) {
-            Debug.LogError("No JSON file found in: " + Application.streamingAssetsPath);
-            return;
+    public bool LoadScenario(string path)
+    {
+        if (!File.Exists(path))
+        {
+            Debug.LogError("File not found: " + path);
+            return false;
         }
 
-        string text = File.ReadAllText(paths[0]);
-        scenario = JsonConvert.DeserializeObject<Scenario>(text);
+        try
+        {
+            string text = File.ReadAllText(path);
+            currentScenario = JsonConvert.DeserializeObject<Scenario>(text);
 
-        Debug.Log($"Loaded scenario: {scenario.meta.title}");
-        Debug.Log($"Schema version: {scenario.schemaVersion}");
+            Debug.Log($"Loaded scenario: {currentScenario.meta.title}");
+            Debug.Log($"Schema version: {currentScenario.schemaVersion}");
+
+            GameTimer.Instance.StartTimer();
+            Debug.Log("Timer Started");
+
+            return true;
+        }
+        catch (JsonException ex)
+        {
+            Debug.LogError($"Failed to parse {path}: {ex.Message}");
+            return false;
+        }
     }
 }
