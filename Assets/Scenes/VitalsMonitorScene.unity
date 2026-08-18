@@ -2702,6 +2702,22 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1070381426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c300108eb8c4b144a3c57c88e71fca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pulse.Unity.PulseData
+  timeStampList:
+    list: []
+  valuesTable:
+  - list: []
 --- !u!1 &1248420783
 GameObject:
   m_ObjectHideFlags: 0
@@ -2941,7 +2957,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b9af4d0cdfe6644ab4ac0255a8f4396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.EcgWaveformSource
-  data: {fileID: 1370068648}
+  data: {fileID: 1070381426}
   ecgJson: {fileID: 4900000, guid: 4a0a4aacd388a4b4d89cef95ad94acca, type: 3}
   fallbackHr: 75
 --- !u!4 &1302743495
@@ -2959,22 +2975,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1854943581}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1370068648
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c300108eb8c4b144a3c57c88e71fca4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pulse.Unity.PulseData
-  timeStampList:
-    list: []
-  valuesTable:
-  - list: []
 --- !u!1 &1604168861
 GameObject:
   m_ObjectHideFlags: 0
@@ -3168,7 +3168,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1605435473}
   m_CullTransparentMesh: 0
---- !u!114 &1641488716
+--- !u!114 &1661474573
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3273,7 +3273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97028b25c0c010a408caaba631b104b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.VitalsDataSource
-  data: {fileID: 1641488716}
+  data: {fileID: 1661474573}
 --- !u!1 &1787343759
 GameObject:
   m_ObjectHideFlags: 0
@@ -3429,6 +3429,7 @@ GameObject:
   - component: {fileID: 1854943583}
   - component: {fileID: 1854943582}
   - component: {fileID: 1854943585}
+  - component: {fileID: 1854943586}
   m_Layer: 0
   m_Name: Monitor
   m_TagString: Untagged
@@ -3547,6 +3548,25 @@ MonoBehaviour:
   idleMessage: Check Monitor (E)
   interactableType: 1
   opensPanel: 1
+  outline: {fileID: 1854943586}
+--- !u!114 &1854943586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854943580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Outline
+  outlineMode: 0
+  outlineColor: {r: 0.9716981, g: 0.60890156, b: 0, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &1868589353
 GameObject:
   m_ObjectHideFlags: 0

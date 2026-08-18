@@ -19,7 +19,37 @@ namespace DefaultNamespace
 
         [SerializeField] bool opensPanel = true;
 
+        [SerializeField] Outline outline;
+
         ScenarioLoader scenarioLoader;
+        Color scenarioGlowColor;
+        bool isHovered;
+
+        void Start()
+        {
+            if (outline != null)
+                scenarioGlowColor = outline.OutlineColor;
+        }
+
+        void Update()
+        {
+            if (outline == null)
+                return;
+
+            bool scenarioActive = GetActiveOption() != null;
+            bool shouldGlow = InteractionGlowSettings.Enabled && (isHovered || scenarioActive);
+
+            if (outline.enabled != shouldGlow)
+                outline.enabled = shouldGlow;
+
+            if (shouldGlow)
+                outline.OutlineColor = isHovered ? Color.white : scenarioGlowColor;
+        }
+
+        public void SetHovered(bool hovered)
+        {
+            isHovered = hovered;
+        }
 
         public string InteractMessage
         {
@@ -53,7 +83,7 @@ namespace DefaultNamespace
             if (loader == null || loader.CurrentScenario == null)
                 return null;
 
-            Node currentNode = null;
+            Node currentNode = null; // TODO: once ScenarioLoader exposes the rule engine's current node (e.g. loader.CurrentNode), swap this line for it.
 
             return ScenarioLookup.GetOptionForHotspot(currentNode, hotspotId);
         }

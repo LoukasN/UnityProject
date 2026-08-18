@@ -18,7 +18,7 @@ public class EhrPanelController : MonoBehaviour
 
     private void ApplyGateRequirements()
     {
-        Node currentNode = null; // TODO: replace with the rule engine's current node once it exists.
+        Node currentNode = null; // TODO: once ScenarioLoader exposes the rule engine's current node (e.g. loader.CurrentNode), swap this line for it.
         activeNode = currentNode;
 
         if (currentNode?.gateRequirements?.requiredForms == null)

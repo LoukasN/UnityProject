@@ -54,7 +54,11 @@ namespace DefaultNamespace
                 return;
 
             if (vitals != null)
+            {
+                if (vitals.CurrentHr <= 0)
+                    return; // scenario not loaded yet - stay frozen instead of animating on fallbackHr
                 SetHeartRate(vitals.CurrentHr);
+            }
 
             float samplePeriod = (60f / currentHr) / samples.Count;
 
