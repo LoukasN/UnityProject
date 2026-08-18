@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject pauseMenuPanel;
     bool isPaused;
+    bool gameplayStarted;
     public bool IsPaused => isPaused;
     bool wasMovableBeforePause;
     bool wasTimerRunningBeforePause;
@@ -87,7 +88,7 @@ public class UIManager : MonoBehaviour
 
         if (isPaused)
             ClosePauseMenu();
-        else
+        else if (gameplayStarted)
             OpenPauseMenu();
     }
 
@@ -126,6 +127,14 @@ public class UIManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 
     public void PauseMenuGoToMainMenu()
@@ -188,6 +197,7 @@ public class UIManager : MonoBehaviour
         objectivePanel.SetActive(false);
 
         playerMovement.canMove = false;
+        gameplayStarted = false;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -200,6 +210,7 @@ public class UIManager : MonoBehaviour
 
         playerMovement.canMove = true;
         GameTimer.Instance.StartTimer();
+        gameplayStarted = true;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -212,6 +223,7 @@ public class UIManager : MonoBehaviour
         objectivePanel.SetActive(false);
 
         playerMovement.canMove = false;
+        gameplayStarted = false;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -235,6 +247,7 @@ public class UIManager : MonoBehaviour
 
         playerMovement.canMove = false;
         GameTimer.Instance.Pause();
+        gameplayStarted = false;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
