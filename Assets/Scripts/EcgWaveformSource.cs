@@ -21,6 +21,7 @@ public class EcgWaveformSource : PulseDataSource {
     float timer;
     float currentHr;
     VitalsDataSource vitals;
+    double clock; // only advances while running, so pauses don't create a timestamp jump
 
     void Start() {
         vitals = FindFirstObjectByType<VitalsDataSource>();
@@ -59,11 +60,12 @@ public class EcgWaveformSource : PulseDataSource {
         float samplePeriod = (60f / currentHr) / samples.Count;
 
         timer += Time.deltaTime;
+        clock += Time.deltaTime;
         while (timer >= samplePeriod) {
             timer -= samplePeriod;
 
             data.timeStampList.Clear();
-            data.timeStampList.Add(Time.time);
+            data.timeStampList.Add(clock);
             data.valuesTable[FIELD_ECG].Clear();
             data.valuesTable[FIELD_ECG].Add(samples[sampleIndex]);
 
