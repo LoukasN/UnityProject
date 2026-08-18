@@ -62,15 +62,15 @@ public class GenericInteractable : MonoBehaviour, InterfaceInteractable {
     }
 
     public void Interact() {
-        var option = GetActiveOption();
-
         if (!interactionEnabled) {
             return;
         }
 
+        var option = GetActiveOption();
+
         if (option != null) {
             HandleOption(option);
-        } else {
+        } else if (!opensPanel) {
             UIManager.Instance.ShowToast($"{hotspotId}: not needed right now.");
         }
 
