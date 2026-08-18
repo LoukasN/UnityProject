@@ -1,12 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Newtonsoft.Json;
 
-// Walks the decision tree of the loaded scenario. Everything here is generic:
-// it only reads the JSON's structure (node types, effects, rules), never a
-// specific scenario's ids — so a new scenario is a new JSON file, zero new code.
 public class ScenarioEngine : MonoBehaviour {
     public static ScenarioEngine Instance { get; private set; }
 
@@ -15,12 +12,8 @@ public class ScenarioEngine : MonoBehaviour {
     private int score;
     private Dictionary<string, bool> flags = new Dictionary<string, bool>();
 
-    // "formId.field" for every EHR field the user has saved. A HashSet because
-    // we only ever ask "was this documented?" — no order, no duplicates.
     private HashSet<string> documentedFields = new HashSet<string>();
 
-    // Ids of global rules whose condition is currently true, so a rule fires
-    // once when its condition BECOMES true instead of on every vitals change.
     private HashSet<string> activeRules = new HashSet<string>();
 
     private List<string> decisionPath = new List<string>();
@@ -29,6 +22,10 @@ public class ScenarioEngine : MonoBehaviour {
     private float timeoutRemaining;
     private bool timeoutArmed;
 
+    [SerializeField]
+    private float nodeTransitionDelay = 1.5f;
+    private Coroutine nodeTransitionCoroutine;
+
     public Node CurrentNode => currentNode;
     public int Score => score;
 
@@ -36,8 +33,6 @@ public class ScenarioEngine : MonoBehaviour {
         Instance = this;
     }
 
-    // Called by UIManager.CloseStartScreen when the player presses Start.
-    // Calling it again later IS the reset: it re-applies initial_state.
     public void StartScenario(Scenario loadedScenario) {
         scenario = loadedScenario;
         ApplyInitialState();
@@ -47,8 +42,6 @@ public class ScenarioEngine : MonoBehaviour {
     void ApplyInitialState() {
         score = scenario.initialState.currentScore;
 
-        // Copy the flags instead of pointing at the dictionary inside the
-        // scenario, so a reset starts from the untouched original values.
         flags.Clear();
         foreach (var (flagName, value) in scenario.initialState.flags) {
             flags[flagName] = value;
@@ -65,7 +58,6 @@ public class ScenarioEngine : MonoBehaviour {
 
         ApplyActiveHotspots();
 
-        // The scenario may already start in an alarm state (template: spo2 88).
         CheckGlobalRules();
     }
 
@@ -81,54 +73,63 @@ public class ScenarioEngine : MonoBehaviour {
         return null;
     }
 
-    public void GoToNode(string nodeId) {
+    public void GoToNode(string nodeId)
+    {
+        CancelInvoke(nameof(GoToNode));
+    
         currentNode = FindNode(nodeId);
-        Debug.Log(currentNode);
-        if (currentNode == null) {
+    
+        if (currentNode == null)
             return;
-        }
-
-        Log("NODE_ENTER", currentNode.id);
-        EnterNode(currentNode);
+    
+        StartCoroutine(EnterNodeAfterDelay(currentNode));
+    }
+    
+    IEnumerator EnterNodeAfterDelay(Node node)
+    {
+        yield return new WaitForSeconds(nodeTransitionDelay);
+    
+        Debug.Log("NODE ENTER: " + node.id);
+        Log("NODE_ENTER", node.id);
+        EnterNode(node);
     }
 
-    // The one place that decides what each node type means.
     void EnterNode(Node node) {
         timeoutArmed = false;
 
         if (node.type == "message") {
-            // Waits for the Continue button (UIManager.OnContinueClicked),
-            // otherwise the text would be replaced before anyone reads it.
+            StartCoroutine(AutoAdvanceMessage(node));
         }
         else if (node.type == "decision") {
+        // Something here
             if (node.timeout != null) {
                 timeoutRemaining = node.timeout.seconds;
                 timeoutArmed = true;
             }
-            // Now we wait: GenericInteractable calls ChooseOption().
         }
         else if (node.type == "gate") {
-            // Now we wait: the EHR Save button calls OnEhrSubmit().
+        // Something here
         }
         else if (node.type == "end") {
-            FinishScenario(node);
+        // Something here
         }
         else {
             Debug.LogWarning("Unknown node type: " + node.type);
         }
     }
 
-    // ContextMenu makes this callable by right-clicking the component in the
-    // Inspector during Play, so message nodes can be passed before the node
-    // panel UI is wired up.
+    IEnumerator AutoAdvanceMessage(Node node)
+    {
+        yield return new WaitForSeconds(3f);
+        GoToNode(node.nextNodeId);
+    }
+
     [ContextMenu("Continue (message nodes)")]
     public void ContinueFromMessage() {
         if (currentNode != null && currentNode.type == "message") {
             GoToNode(currentNode.nextNodeId);
         }
     }
-
-    // ---------- decisions ----------
 
     public void ChooseOption(Option option) {
         timeoutArmed = false;
@@ -139,19 +140,6 @@ public class ScenarioEngine : MonoBehaviour {
     }
 
     void Update() {
-        // Enter advances message nodes: in first-person mode the cursor is
-        // locked, so the on-screen Continue button alone would be unreachable.
-        // Only while the cursor IS locked — otherwise typing Enter into an
-        // EHR input field would silently skip message nodes.
-        if (currentNode != null && currentNode.type == "message"
-            && Cursor.lockState == CursorLockMode.Locked
-            && Keyboard.current != null
-            && (Keyboard.current.enterKey.wasPressedThisFrame
-                || Keyboard.current.numpadEnterKey.wasPressedThisFrame)) {
-            ContinueFromMessage();
-        }
-
-        // Timeout countdown for decision nodes (the scenario's χρονικός κανόνας).
         if (!timeoutArmed || !GameTimer.Instance.IsRunning) {
             return;
         }
@@ -166,8 +154,6 @@ public class ScenarioEngine : MonoBehaviour {
         }
     }
 
-    // ---------- effects (options, timeouts and gates all share this shape) ----------
-
     void ApplyEffects(Effects effects) {
         if (effects == null) {
             return;
@@ -181,7 +167,6 @@ public class ScenarioEngine : MonoBehaviour {
 
         if (effects.stateUpdate != null) {
             foreach (var (key, value) in effects.stateUpdate) {
-                // Keys look like "flags.assessment_complete".
                 if (key.StartsWith("flags.")) {
                     flags[key.Substring("flags.".Length)] = value;
                 }
@@ -195,11 +180,9 @@ public class ScenarioEngine : MonoBehaviour {
             var vitalsSource = FindFirstObjectByType<DefaultNamespace.VitalsDataSource>();
             vitalsSource.ApplyVitalsUpdate(effects.vitalsUpdate);
             Log("VITALS_CHANGE", JsonConvert.SerializeObject(effects.vitalsUpdate));
-            CheckGlobalRules(); // vitals moved, rules may turn on or off
+            CheckGlobalRules();
         }
     }
-
-    // ---------- global rules ----------
 
     void CheckGlobalRules() {
         if (scenario.rules == null || scenario.rules.globalRules == null) {
@@ -213,7 +196,6 @@ public class ScenarioEngine : MonoBehaviour {
 
             bool conditionsMet = true;
             foreach (var (conditionKey, operators) in rule.condition) {
-                // conditionKey: "vitals.spo2"    operators: { "lt": 90 }
                 double actual = ReadStateValue(conditionKey);
                 foreach (var op in operators.Properties()) {
                     if (!EvaluateCondition(op.Name, actual, (double)op.Value)) {
@@ -229,7 +211,6 @@ public class ScenarioEngine : MonoBehaviour {
                 }
             }
             else if (!conditionsMet && activeRules.Contains(rule.id)) {
-                // Condition cleared (spo2 back over 90): stop the visual alarm.
                 activeRules.Remove(rule.id);
                 foreach (var effect in rule.effects) {
                     if (effect.type == "ui_visual") {
@@ -251,7 +232,6 @@ public class ScenarioEngine : MonoBehaviour {
         return false;
     }
 
-    // Turns a condition key from the JSON into the live value it refers to.
     double ReadStateValue(string key) {
         if (key.StartsWith("vitals.")) {
             var vitalsSource = FindFirstObjectByType<DefaultNamespace.VitalsDataSource>();
@@ -265,8 +245,6 @@ public class ScenarioEngine : MonoBehaviour {
         return 0;
     }
 
-    // Rule effects have their own shape (type/target/state/message),
-    // different from node effects — hence a second method.
     void ApplyRuleEffect(Effect effect) {
         if (effect.type == "ui_visual") {
             // HotspotVisual.Apply(effect.target, effect.state);
@@ -279,11 +257,6 @@ public class ScenarioEngine : MonoBehaviour {
         }
     }
 
-    // ---------- EHR + gates ----------
-
-    // Called by EhrFormsPanel's Save button with every "formId.field" the user
-    // has filled in. Documentation is remembered even when it is saved before
-    // any gate asks for it — like a real chart.
     public void OnEhrSubmit(List<string> filledFieldKeys) {
         foreach (var key in filledFieldKeys) {
             documentedFields.Add(key);
@@ -321,8 +294,6 @@ public class ScenarioEngine : MonoBehaviour {
             }
         }
 
-        // Naming what is missing is the difference between "something is
-        // wrong" and "here is what to fix".
         if (missing.Count > 0) {
             UIManager.Instance.ShowToast(gate.feedbackBlocked + "\nΛείπει: " + string.Join(", ", missing));
             return;
@@ -331,34 +302,10 @@ public class ScenarioEngine : MonoBehaviour {
         if (!string.IsNullOrEmpty(gate.feedbackSuccess)) {
             UIManager.Instance.ShowToast(gate.feedbackSuccess);
         }
-        // Documentation accepted: hand the player back to the room so the
-        // next node is visible immediately (the EHR can be reopened anytime).
         UIManager.Instance.CloseEHR();
         ApplyEffects(gate.effectsOnPass);
         GoToNode(gate.nextNodeId);
     }
-
-    // Test helper ONLY (remove or ignore for the final demo): pretends the
-    // EHR fields of the current gate were filled and saved, so the flow can
-    // be tested before the EHR form UI is built. Right-click the component
-    // header during Play to use it.
-    [ContextMenu("DEBUG: fill current gate's required fields")]
-    void DebugFillCurrentGate() {
-        if (currentNode == null || currentNode.type != "gate") {
-            Debug.Log("DEBUG: not on a gate node right now.");
-            return;
-        }
-
-        var keys = new List<string>();
-        foreach (var required in currentNode.gateRequirements.requiredForms) {
-            foreach (var field in required.fields) {
-                keys.Add(required.formId + "." + field);
-            }
-        }
-        OnEhrSubmit(keys);
-    }
-
-    // ---------- hotspots ----------
 
     void ApplyActiveHotspots() {
         var interactables = FindObjectsByType<DefaultNamespace.GenericInteractable>(FindObjectsSortMode.None);
@@ -376,14 +323,8 @@ public class ScenarioEngine : MonoBehaviour {
         Log("HOTSPOT_INTERACTION", hotspotId);
     }
 
-    // ---------- end of scenario ----------
-
     void FinishScenario(Node node) {
         var debrief = node.debriefConfig;
-
-        // "Missed docs" checks EVERY gate in the scenario, not only visited
-        // ones: skipping the escalation branch also skips its documentation,
-        // and the debrief must point that out.
         var missedDocs = new List<string>();
         if (debrief != null && debrief.highlightMissedDocs) {
             foreach (var n in scenario.nodes) {
@@ -411,8 +352,6 @@ public class ScenarioEngine : MonoBehaviour {
 
         UIManager.Instance.ShowDebrief(node.text, score, shownPath, missedDocs);
     }
-
-    // ---------- logging ----------
 
     void Log(string eventType, string detail) {
     return;
