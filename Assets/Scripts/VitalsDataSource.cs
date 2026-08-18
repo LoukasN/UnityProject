@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Pulse.Unity;
+using Newtonsoft.Json.Linq;
 
 namespace DefaultNamespace
 {
@@ -61,27 +62,27 @@ namespace DefaultNamespace
 
             PushAll();
         }
-        public void ApplyVitalsUpdate(Dictionary<string, int> updates)
+        public void ApplyVitalsUpdate(Dictionary<string, JValue> updates)
         {
             if (updates == null)
                 return;
-
+        
             foreach (var kv in updates)
             {
                 switch (kv.Key)
                 {
-                    case "hr": currentHr = kv.Value; break;
-                    case "spo2": currentSpo2 = kv.Value; break;
-                    case "rr": currentRr = kv.Value; break;
-                    case "temp": currentTemp = kv.Value; break;
-                    case "bp_systolic": currentSystolic = kv.Value; break;
-                    case "bp_diastolic": currentDiastolic = kv.Value; break;
+                    case "hr": currentHr = (double)kv.Value; break;
+                    case "spo2": currentSpo2 = (double)kv.Value; break;
+                    case "rr": currentRr = (double)kv.Value; break;
+                    case "temp": currentTemp = (double)kv.Value; break;
+                    case "bp_systolic": currentSystolic = (double)kv.Value; break;
+                    case "bp_diastolic": currentDiastolic = (double)kv.Value; break;
                     default:
                         Debug.LogWarning($"VitalsDataSource: unknown vitals_update key '{kv.Key}', ignored.");
                         break;
                 }
             }
-
+        
             PushAll();
         }
 
@@ -113,6 +114,20 @@ namespace DefaultNamespace
         {
             var parts = bp.Split('/');
             return (int.Parse(parts[0]), int.Parse(parts[1]));
+        }
+
+        public double GetVital(string name){
+            switch (name){
+                case "hr": return currentHr;
+                case "spo2": return currentSpo2;
+                case "rr": return currentRr;
+                case "temp": return currentTemp;
+                case "bp_systolic": return currentSystolic;
+                case "bp_diastolic": return currentDiastolic;
+                default:
+                    Debug.LogWarning($"VitalsDataSource: unknown vital '{name}' requested, returning 0.");
+                    return 0;
+            }
         }
     }
 }

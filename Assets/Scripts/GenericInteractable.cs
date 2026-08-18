@@ -12,6 +12,7 @@ namespace DefaultNamespace
         }
 
         [SerializeField] string hotspotId;
+        public string HotspotId => hotspotId;
 
         [SerializeField] string idleMessage = "Press (E) to interact";
 
@@ -20,6 +21,8 @@ namespace DefaultNamespace
         [SerializeField] bool opensPanel = true;
 
         [SerializeField] Outline outline;
+
+        [SerializeField] bool interactionEnabled = true;
 
         ScenarioLoader scenarioLoader;
         Color scenarioGlowColor;
@@ -63,6 +66,10 @@ namespace DefaultNamespace
         public void Interact()
         {
             var option = GetActiveOption();
+
+            if (!interactionEnabled){
+                return;
+            }
 
             if (option != null)
             {
@@ -109,6 +116,10 @@ namespace DefaultNamespace
             {
                 UIManager.Instance.OpenEHR();
             }
+        }
+
+        public void SetInteractionEnabled(bool enabled){
+            interactionEnabled = enabled;
         }
 
         ScenarioLoader GetScenarioLoader()

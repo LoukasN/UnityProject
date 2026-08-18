@@ -70,21 +70,8 @@ public class Hotspot {
     public string label;
 }
 
-public class EhrConfig
-{
-    public FormsConfig forms;
-}
-
-public class FormsConfig
-{
-    [JsonProperty("assessment_form")]
-    public Form assessmentForm;
-
-    [JsonProperty("intervention_form")]
-    public Form interventionForm;
-
-    [JsonProperty("communication_log")]
-    public Form communicationLog;
+public class EhrConfig {
+    public Dictionary<string, Form> forms;
 }
 
 public class Form {
@@ -117,6 +104,8 @@ public class Node {
     public string id;
     public string type;
     public string text;
+    // Only on gates
+    public string description;
 
     [JsonProperty("next_node_id")]
     public string nextNodeId;
@@ -163,7 +152,7 @@ public class Effects {
     public Dictionary<string, bool> stateUpdate;
 
     [JsonProperty("vitals_update")]
-    public Dictionary<string, int> vitalsUpdate;
+    public Dictionary<string, JValue> vitalsUpdate;
 }
 
 public class Timeout {

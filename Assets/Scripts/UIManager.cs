@@ -214,6 +214,9 @@ public class UIManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        var scenarioLoader = FindFirstObjectByType<ScenarioLoader>();
+        ScenarioEngine.Instance.StartScenario(scenarioLoader.CurrentScenario);
     }
 
     public void OpenScenarioSelect()
