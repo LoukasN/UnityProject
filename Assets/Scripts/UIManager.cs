@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
 {
@@ -16,6 +17,12 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI startGoalsText;
 
     public GameObject scenarioSelectPanel;
+
+    public GameObject pauseMenuPanel;
+    bool isPaused;
+    public bool IsPaused => isPaused;
+    bool wasMovableBeforePause;
+    bool wasTimerRunningBeforePause;
 
     public GameObject endScreenPanel;
     public TextMeshProUGUI endTitleText;
@@ -71,6 +78,64 @@ public class UIManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+    }
+
+    void Update()
+    {
+        if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame)
+            return;
+
+        if (isPaused)
+            ClosePauseMenu();
+        else
+            OpenPauseMenu();
+    }
+
+    public void OpenPauseMenu()
+    {
+        if (isPaused)
+            return;
+
+        wasMovableBeforePause = playerMovement.canMove;
+        wasTimerRunningBeforePause = GameTimer.Instance.IsRunning;
+
+        pauseMenuPanel.SetActive(true);
+        objectivePanel.SetActive(false);
+
+        playerMovement.canMove = false;
+        if (wasTimerRunningBeforePause)
+            GameTimer.Instance.Pause();
+        isPaused = true;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void ClosePauseMenu()
+    {
+        pauseMenuPanel.SetActive(false);
+        isPaused = false;
+
+        playerMovement.canMove = wasMovableBeforePause;
+        if (wasTimerRunningBeforePause)
+            GameTimer.Instance.Resume();
+
+        if (wasMovableBeforePause)
+        {
+            RefreshObjectiveVisibility();
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
+
+    public void PauseMenuGoToMainMenu()
+    {
+        pauseMenuPanel.SetActive(false);
+        isPaused = false;
+
+        GameTimer.Instance.ResetTimer();
+
+        OpenStartScreen();
     }
 
     public void OpenVitalsMonitor()
@@ -218,7 +283,13 @@ public class UIManager : MonoBehaviour
 
     IEnumerator HideToastAfterDelay()
     {
-        yield return new WaitForSeconds(toastDuration);
+        float remaining = toastDuration;
+        while (remaining > 0f)
+        {
+            if (!isPaused)
+                remaining -= Time.deltaTime;
+            yield return null;
+        }
         toastPanel.SetActive(false);
     }
 }

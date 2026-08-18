@@ -53,6 +53,9 @@ namespace DefaultNamespace
             if (!Application.isPlaying || samples == null || samples.Count == 0)
                 return;
 
+            if (UIManager.Instance != null && UIManager.Instance.IsPaused)
+                return; // frozen while the pause menu is open
+
             if (vitals != null)
             {
                 if (vitals.CurrentHr <= 0)
