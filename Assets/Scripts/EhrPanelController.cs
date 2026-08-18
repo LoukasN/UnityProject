@@ -81,10 +81,6 @@ public class EhrPanelController : MonoBehaviour {
                 filledFieldKeys.Add(
                     form.formId + "." + fieldKey);
             }
-
-            EhrDataStore.SubmitForm(
-                form.formId,
-                values);
         }
 
         Debug.Log(

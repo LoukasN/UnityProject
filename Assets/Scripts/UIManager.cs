@@ -42,6 +42,7 @@ public class UIManager : MonoBehaviour {
 
     Coroutine toastCoroutine;
     bool hasObjectiveText;
+    Node lastObjectiveNode;
 
     public PlayerMovement playerMovement;
 
@@ -77,6 +78,8 @@ public class UIManager : MonoBehaviour {
     }
 
     void Update() {
+        PollObjectiveText();
+
         if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame)
             return;
 
@@ -84,6 +87,20 @@ public class UIManager : MonoBehaviour {
             ClosePauseMenu();
         else if (gameplayStarted)
             OpenPauseMenu();
+    }
+
+    void PollObjectiveText() {
+        if (ScenarioEngine.Instance == null)
+            return;
+
+        Node node = ScenarioEngine.Instance.CurrentNode;
+        if (node == lastObjectiveNode)
+            return;
+
+        lastObjectiveNode = node;
+
+        if (node != null && node.type != "end")
+            SetObjectiveText(node.text);
     }
 
     public void OpenPauseMenu() {
