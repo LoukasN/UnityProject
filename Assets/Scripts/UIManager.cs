@@ -32,6 +32,7 @@ public class UIManager : MonoBehaviour {
 
     public GameObject objectivePanel;
     public TextMeshProUGUI objectiveText;
+    public TextMeshProUGUI objectiveDescriptionText;
 
     public GameObject toastPanel;
     public TextMeshProUGUI toastText;
@@ -100,7 +101,7 @@ public class UIManager : MonoBehaviour {
         lastObjectiveNode = node;
 
         if (node != null && node.type != "end")
-            SetObjectiveText(node.text);
+            SetObjectiveText(node.text, node.description);
     }
 
     public void OpenPauseMenu() {
@@ -147,6 +148,10 @@ public class UIManager : MonoBehaviour {
     public void PauseMenuGoToMainMenu() {
         pauseMenuPanel.SetActive(false);
         isPaused = false;
+
+        vitalsMonitorPanel.SetActive(false);
+        EHRPanel.SetActive(false);
+        toastPanel.SetActive(false);
 
         GameTimer.Instance.ResetTimer();
 
@@ -242,6 +247,11 @@ public class UIManager : MonoBehaviour {
         endDecisionPathText.text = string.Join("\n", decisionPath);
         endMissedDocsText.text = missedDocs.Count > 0 ? string.Join("\n", missedDocs) : "None";
 
+        vitalsMonitorPanel.SetActive(false);
+        EHRPanel.SetActive(false);
+        pauseMenuPanel.SetActive(false);
+        isPaused = false;
+
         endScreenPanel.SetActive(true);
         objectivePanel.SetActive(false);
 
@@ -261,10 +271,16 @@ public class UIManager : MonoBehaviour {
         OpenStartScreen();
     }
 
-    public void SetObjectiveText(string text) {
+    public void SetObjectiveText(string text, string description = null) {
         objectiveText.text = text;
         hasObjectiveText = !string.IsNullOrEmpty(text);
         RefreshObjectiveVisibility();
+
+        if (objectiveDescriptionText != null) {
+            bool hasDescription = !string.IsNullOrEmpty(description);
+            objectiveDescriptionText.text = description;
+            objectiveDescriptionText.gameObject.SetActive(hasDescription);
+        }
     }
 
     void RefreshObjectiveVisibility() {
