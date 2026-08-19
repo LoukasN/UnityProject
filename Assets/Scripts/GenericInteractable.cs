@@ -82,7 +82,7 @@ public class GenericInteractable : MonoBehaviour, InterfaceInteractable {
         if (option != null) {
             HandleOption(option);
         } else if (!opensPanel) {
-            UIManager.Instance.ShowToast($"{hotspotId}: Δεν χρειάζεται αυτή την στιγμή.");
+            UIManager.Instance.ShowToast("Δεν χρειάζεται αυτή την στιγμή.");
         }
 
         if (opensPanel)
