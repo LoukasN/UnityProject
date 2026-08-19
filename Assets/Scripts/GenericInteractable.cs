@@ -24,13 +24,20 @@ public class GenericInteractable : MonoBehaviour, InterfaceInteractable {
     [SerializeField]
     bool interactionEnabled = true;
 
-    Color scenarioGlowColor;
-    bool isHovered;
+    [Header("Glow colours")]
+    [Tooltip("The current node targets this hotspot, and you are not looking at it.")]
+    [SerializeField]
+    Color scenarioColor = Color.red;
 
-    void Start() {
-        if (outline != null)
-            scenarioGlowColor = outline.OutlineColor;
-    }
+    [Tooltip("You are looking at the hotspot the current node targets — the 'do this now' state.")]
+    [SerializeField]
+    Color scenarioHoverColor = new Color(0.35f, 0.65f, 1f);
+
+    [Tooltip("You are looking at an interactable the current node does not target.")]
+    [SerializeField]
+    Color idleHoverColor = Color.white;
+
+    bool isHovered;
 
     void Update() {
         if (outline == null)
@@ -43,8 +50,12 @@ public class GenericInteractable : MonoBehaviour, InterfaceInteractable {
         if (outline.enabled != shouldGlow)
             outline.enabled = shouldGlow;
 
-        if (shouldGlow)
-            outline.OutlineColor = isHovered ? Color.white : scenarioGlowColor;
+        if (shouldGlow) {
+            if (!isHovered)
+                outline.OutlineColor = scenarioColor;
+            else
+                outline.OutlineColor = scenarioActive ? scenarioHoverColor : idleHoverColor;
+        }
     }
 
     public void SetHovered(bool hovered) {
