@@ -146,7 +146,7 @@ public class ScenarioEngine : MonoBehaviour {
     public void ChooseOption(Option option) {
         Debug.Log("PATIENT CHOICE CLICKED: " + option.label);
         timeoutArmed = false;
-        decisionPath.Add($"{currentNode.id}: {option.label}");
+        decisionPath.Add($"{currentNode.text} \n -{option.label}");
         Log("OPTION_SELECTED", option.id);
         ApplyEffects(option.effects);
         GoToNode(option.nextNodeId);
@@ -160,7 +160,7 @@ public class ScenarioEngine : MonoBehaviour {
         timeoutRemaining -= Time.deltaTime;
         if (timeoutRemaining <= 0f) {
             timeoutArmed = false;
-            decisionPath.Add($"{currentNode.id}: (timeout)");
+            decisionPath.Add($"{currentNode.text}\n -Καμία επιλογή (Έληξε το χρονικό όριο).");
             Log("OPTION_SELECTED", "timeout");
             ApplyEffects(currentNode.timeout.onTimeoutEffects);
             GoToNode(currentNode.timeout.nextNodeId);
