@@ -35,25 +35,25 @@ public class VitalsDataSource : PulseDataSource {
 
         data.timeStampList = new DoubleList();
         data.valuesTable = new List<DoubleList> {
-            new DoubleList(), // hr
-            new DoubleList(), // bp_systolic
-            new DoubleList(), // bp_diastolic
-            new DoubleList(), // bp_mean
-            new DoubleList(), // spo2
-            new DoubleList(), // rr
-            new DoubleList(), // temp
+            new DoubleList(),
+            new DoubleList(),
+            new DoubleList(),
+            new DoubleList(),
+            new DoubleList(),
+            new DoubleList(),
+            new DoubleList(),
         };
     }
 
-    public void UpdateVitals(Vitals v) {
-        var (systolic, diastolic) = ParseBp(v.bp);
+    public void UpdateVitals(Vitals vitals) {
+        var (systolic, diastolic) = ParseBp(vitals.bp);
 
-        currentHr = v.hr;
+        currentHr = vitals.hr;
         currentSystolic = systolic;
         currentDiastolic = diastolic;
-        currentSpo2 = v.spo2;
-        currentRr = v.rr;
-        currentTemp = v.temp;
+        currentSpo2 = vitals.spo2;
+        currentRr = vitals.rr;
+        currentTemp = vitals.temp;
 
         PushAll();
     }
@@ -61,34 +61,34 @@ public class VitalsDataSource : PulseDataSource {
         if (updates == null)
             return;
 
-        foreach (var kv in updates) {
-            switch (kv.Key) {
+        foreach (var updateValue in updates) {
+            switch (updateValue.Key) {
             case "hr":
-                currentHr = (double)kv.Value;
+                currentHr = (double)updateValue.Value;
                 break;
             case "spo2":
-                currentSpo2 = (double)kv.Value;
+                currentSpo2 = (double)updateValue.Value;
                 break;
             case "rr":
-                currentRr = (double)kv.Value;
+                currentRr = (double)updateValue.Value;
                 break;
             case "temp":
-                currentTemp = (double)kv.Value;
+                currentTemp = (double)updateValue.Value;
                 break;
             case "bp_systolic":
-                currentSystolic = (double)kv.Value;
+                currentSystolic = (double)updateValue.Value;
                 break;
             case "bp_diastolic":
-                currentDiastolic = (double)kv.Value;
+                currentDiastolic = (double)updateValue.Value;
                 break;
             case "bp":
-                // Same "120/80" form initial_state.vitals uses.
-                var (systolic, diastolic) = ParseBp((string)kv.Value);
+                // Separate string into 2 int
+                var (systolic, diastolic) = ParseBp((string)updateValue.Value);
                 currentSystolic = systolic;
                 currentDiastolic = diastolic;
                 break;
             default:
-                Debug.LogWarning($"VitalsDataSource: unknown vitals_update key '{kv.Key}', ignored.");
+                Debug.LogWarning($"VitalsDataSource: unknown vitals_update key '{updateValue.Key}'");
                 break;
             }
         }
@@ -124,7 +124,7 @@ public class VitalsDataSource : PulseDataSource {
         if (parts == null || parts.Length != 2 ||
             !int.TryParse(parts[0].Trim(), out int systolic) ||
             !int.TryParse(parts[1].Trim(), out int diastolic)) {
-            Debug.LogWarning($"VitalsDataSource: could not parse bp '{bp}', expected \"120/80\".");
+            Debug.LogWarning($"VitalsDataSource: could not parse bp '{bp}'.");
             return (0, 0);
         }
 
@@ -146,7 +146,7 @@ public class VitalsDataSource : PulseDataSource {
         case "bp_diastolic":
             return currentDiastolic;
         default:
-            Debug.LogWarning($"VitalsDataSource: unknown vital '{name}' requested, returning 0.");
+            Debug.LogWarning($"VitalsDataSource: unknown vital '{name}'.");
             return 0;
         }
     }

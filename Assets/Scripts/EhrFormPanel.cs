@@ -19,16 +19,18 @@ public class EhrFormPanel : MonoBehaviour {
     public void SetRequiredFields(IEnumerable<string> keys) {
         requiredFields.Clear();
         if (keys != null) {
-            foreach (var key in keys)
+            foreach (var key in keys) {
                 requiredFields.Add(key);
+            }
         }
         RefreshInteractable();
     }
 
     public void SetAllFieldsRequired() {
         requiredFields.Clear();
-        foreach (var entry in fields)
+        foreach (var entry in fields) {
             requiredFields.Add(entry.fieldKey);
+        }
         RefreshInteractable();
     }
 
@@ -36,9 +38,9 @@ public class EhrFormPanel : MonoBehaviour {
         foreach (var entry in fields) {
             bool required = requiredFields.Contains(entry.fieldKey);
             entry.input.interactable = required;
-            if (!required)
+            if (!required) {
                 entry.input.text = "";
-
+            }
             var label = entry.input.transform.parent.Find("Label");
             if (label != null && label.TryGetComponent(out TMP_Text labelText))
                 labelText.color = required ? Color.white : disabledLabelColor;
@@ -48,16 +50,18 @@ public class EhrFormPanel : MonoBehaviour {
     public Dictionary<string, string> GetValues() {
         var values = new Dictionary<string, string>();
         foreach (var entry in fields) {
-            if (requiredFields.Contains(entry.fieldKey))
+            if (requiredFields.Contains(entry.fieldKey)) {
                 values[entry.fieldKey] = entry.input.text;
+            }
         }
         return values;
     }
 
     public bool RequiredFieldsFilled() {
         foreach (var entry in fields) {
-            if (requiredFields.Contains(entry.fieldKey) && string.IsNullOrWhiteSpace(entry.input.text))
+            if (requiredFields.Contains(entry.fieldKey) && string.IsNullOrWhiteSpace(entry.input.text)) {
                 return false;
+            }
         }
         return true;
     }

@@ -13,8 +13,9 @@ public class ScenarioSelectManager : MonoBehaviour {
     }
 
     void PopulateList() {
-        foreach (Transform child in listContainer)
+        foreach (Transform child in listContainer) {
             Destroy(child.gameObject);
+        }
 
         var loader = FindFirstObjectByType<ScenarioLoader>();
         foreach (string path in loader.GetScenarios()) {

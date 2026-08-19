@@ -37,8 +37,9 @@ public class InteractionController : MonoBehaviour {
         var ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
         InterfaceInteractable newTarget = null;
-        if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, interactableLayers))
+        if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, interactableLayers)) {
             newTarget = hit.collider.GetComponentInParent<InterfaceInteractable>();
+        }
 
         if (newTarget != currentTargetInteractable) {
             currentTargetInteractable?.SetHovered(false);
@@ -48,9 +49,7 @@ public class InteractionController : MonoBehaviour {
     }
 
     void UpdateInteractionText() {
-        interactionText.text = currentTargetInteractable == null
-                                   ? string.Empty
-                                   : currentTargetInteractable.InteractMessage;
+        interactionText.text = currentTargetInteractable == null ? string.Empty : currentTargetInteractable.InteractMessage;
     }
 
     void CheckForInteractionInput() {

@@ -59,8 +59,9 @@ public class UIManager : MonoBehaviour {
         var scenarioLoader = FindFirstObjectByType<ScenarioLoader>();
         var vitalsDataSource = FindFirstObjectByType<DefaultNamespace.VitalsDataSource>();
 
-        while (scenarioLoader.CurrentScenario == null)
+        while (scenarioLoader.CurrentScenario == null) {
             yield return null;
+        }
 
         vitalsDataSource.UpdateVitals(scenarioLoader.CurrentScenario.initialState.vitals);
     }
@@ -81,32 +82,38 @@ public class UIManager : MonoBehaviour {
     void Update() {
         PollObjectiveText();
 
-        if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame) {
             return;
+        }
 
-        if (isPaused)
+        if (isPaused) {
             ClosePauseMenu();
-        else if (gameplayStarted)
+        } else if (gameplayStarted) {
             OpenPauseMenu();
+        }
     }
 
     void PollObjectiveText() {
-        if (ScenarioEngine.Instance == null)
+        if (ScenarioEngine.Instance == null) {
             return;
+        }
 
         Node node = ScenarioEngine.Instance.CurrentNode;
-        if (node == lastObjectiveNode)
+        if (node == lastObjectiveNode) {
             return;
+        }
 
         lastObjectiveNode = node;
 
-        if (node != null && node.type != "end")
+        if (node != null && node.type != "end") {
             SetObjectiveText(node.text, node.description);
+        }
     }
 
     public void OpenPauseMenu() {
-        if (isPaused)
+        if (isPaused) {
             return;
+        }
 
         wasMovableBeforePause = playerMovement.canMove;
         wasTimerRunningBeforePause = GameTimer.Instance.IsRunning;
@@ -115,8 +122,9 @@ public class UIManager : MonoBehaviour {
         objectivePanel.SetActive(false);
 
         playerMovement.canMove = false;
-        if (wasTimerRunningBeforePause)
+        if (wasTimerRunningBeforePause) {
             GameTimer.Instance.Pause();
+        }
         isPaused = true;
 
         Cursor.lockState = CursorLockMode.None;
@@ -128,8 +136,9 @@ public class UIManager : MonoBehaviour {
         isPaused = false;
 
         playerMovement.canMove = wasMovableBeforePause;
-        if (wasTimerRunningBeforePause)
+        if (wasTimerRunningBeforePause) {
             GameTimer.Instance.Resume();
+        }
 
         if (wasMovableBeforePause) {
             RefreshObjectiveVisibility();
@@ -140,9 +149,6 @@ public class UIManager : MonoBehaviour {
 
     public void QuitGame() {
         Application.Quit();
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
     }
 
     public void PauseMenuGoToMainMenu() {

@@ -6,8 +6,9 @@ public class EhrPanelController : MonoBehaviour {
     public EhrFormPanel interventionForm;
     public EhrFormPanel communicationForm;
 
-    private EhrFormPanel[] Forms =>
-        new[] { assessmentForm, interventionForm, communicationForm };
+    private EhrFormPanel[] Forms => new[] {
+        assessmentForm, interventionForm, communicationForm
+    };
 
     private Node activeNode;
 
@@ -28,13 +29,10 @@ public class EhrPanelController : MonoBehaviour {
             return;
         }
 
-        // No gate on this node: nothing is required, so nothing is editable. Unlocking
-        // every field here would let the player pre-fill all forms early and auto-pass
-        // every later gate, since the engine's documentedFields set is never cleared.
         if (activeNode.gateRequirements?.requiredForms == null) {
-            foreach (var form in Forms)
+            foreach (var form in Forms) {
                 form.SetRequiredFields(null);
-
+            }
             return;
         }
 
@@ -63,14 +61,11 @@ public class EhrPanelController : MonoBehaviour {
             return;
         }
 
-        // Nothing to submit outside a gate - close instead of leaving a dead button.
         if (activeNode.type != "gate") {
             UIManager.Instance.CloseEHR();
             return;
         }
 
-        // Check that all required fields have been filled.
-        // Default-colour toast: only global_rules with "style": "danger" go red.
         foreach (var form in Forms) {
             if (!form.RequiredFieldsFilled()) {
                 UIManager.Instance.ShowToast(activeNode.feedbackBlocked);
@@ -78,23 +73,16 @@ public class EhrPanelController : MonoBehaviour {
             }
         }
 
-        // Collect the fields that were actually documented.
         var filledFieldKeys = new List<string>();
 
         foreach (var form in Forms) {
             var values = form.GetValues();
 
             foreach (var fieldKey in values.Keys) {
-                filledFieldKeys.Add(
-                    form.formId + "." + fieldKey);
+                filledFieldKeys.Add(form.formId + "." + fieldKey);
             }
         }
 
-        Debug.Log(
-            "EHR SUBMIT: " +
-            string.Join(", ", filledFieldKeys));
-
-        // Let ScenarioEngine determine whether the gate is passed.
         ScenarioEngine.Instance.OnEhrSubmit(filledFieldKeys);
     }
 }

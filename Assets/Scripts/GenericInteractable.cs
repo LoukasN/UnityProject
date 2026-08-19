@@ -13,9 +13,6 @@ public class GenericInteractable : MonoBehaviour, InterfaceInteractable {
     public string HotspotId => hotspotId;
 
     [SerializeField]
-    string idleMessage = "Press (E) to interact";
-
-    [SerializeField]
     InteractableType interactableType;
 
     [SerializeField]
@@ -56,7 +53,7 @@ public class GenericInteractable : MonoBehaviour, InterfaceInteractable {
     public string InteractMessage {
         get {
             var option = GetActiveOption();
-            return option != null ? $"{option.label} (E)" : idleMessage;
+            return option != null ? $"{option.label} (E)" : "";
         }
     }
 
@@ -73,7 +70,7 @@ public class GenericInteractable : MonoBehaviour, InterfaceInteractable {
         if (option != null) {
             HandleOption(option);
         } else if (!opensPanel) {
-            UIManager.Instance.ShowToast($"{hotspotId}: not needed right now.");
+            UIManager.Instance.ShowToast($"{hotspotId}: Δεν χρειάζεται αυτή την στιγμή.");
         }
 
         if (opensPanel)
@@ -82,7 +79,6 @@ public class GenericInteractable : MonoBehaviour, InterfaceInteractable {
 
     Option GetActiveOption() {
         if (ScenarioEngine.Instance == null) {
-            Debug.LogError("GenericInteractable: ScenarioEngine.Instance is null.");
             return null;
         }
         Node currentNode = ScenarioEngine.Instance.CurrentNode;
@@ -94,10 +90,8 @@ public class GenericInteractable : MonoBehaviour, InterfaceInteractable {
 
     void HandleOption(Option option) {
         if (option == null) {
-            Debug.LogError($"GenericInteractable: Option is null for hotspot {hotspotId}");
             return;
         }
-        Debug.Log($"HOTSPOT OPTION: {hotspotId} -> {option.label} -> {option.nextNodeId}");
         ScenarioEngine.Instance.ChooseOption(option);
     }
 

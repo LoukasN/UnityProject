@@ -14,17 +14,11 @@ public class ScenarioLoader : MonoBehaviour {
             Debug.LogError("File not found: " + path);
             return false;
         }
-
         try {
             string text = File.ReadAllText(path);
             currentScenario = JsonConvert.DeserializeObject<Scenario>(text);
-
             Debug.Log($"Loaded scenario: {currentScenario.meta.title}");
             Debug.Log($"Schema version: {currentScenario.schemaVersion}");
-
-            // Timer starts in UIManager.CloseStartScreen(), when gameplay actually begins -
-            // starting it here ran the clock while the player was still reading the briefing.
-
             return true;
         } catch (JsonException ex) {
             Debug.LogError($"Failed to parse {path}: {ex.Message}");

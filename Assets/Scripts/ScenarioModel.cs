@@ -25,16 +25,6 @@ public class Scenario {
     public Logging logging;
 }
 
-public class Logging {
-    public bool enabled;
-
-    [JsonProperty("log_events")]
-    public List<string> logEvents;
-
-    [JsonProperty("export_format")]
-    public string exportFormat;
-}
-
 public class Meta {
     public string id;
     public string title;
@@ -204,3 +194,14 @@ public class DebriefConfig {
     [JsonProperty("export_log")]
     public bool exportLog;
 }
+
+public class Logging {
+    public bool enabled;
+
+    [JsonProperty("log_events")]
+    public List<string> logEvents;
+
+    [JsonProperty("export_format")]
+    public string exportFormat;
+}
+
