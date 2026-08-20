@@ -42,7 +42,7 @@ public class EcgWaveformSource : PulseDataSource {
         if (!Application.isPlaying || samples == null || samples.Count == 0)
             return;
 
-        if (UIManager.Instance != null && UIManager.Instance.IsPaused)
+        if (UIManager.Instance != null && !UIManager.Instance.GameplayActive)
             return;
 
         if (vitals != null) {

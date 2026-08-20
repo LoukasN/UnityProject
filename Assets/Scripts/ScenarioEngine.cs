@@ -227,7 +227,11 @@ public class ScenarioEngine : MonoBehaviour {
                     watchedVitals.Add(conditionKey.Substring("vitals.".Length));
                 }
 
-                double actual = ReadStateValue(conditionKey);
+                if (!TryReadStateValue(conditionKey, out double actual)) {
+                    conditionsMet = false;
+                    continue;
+                }
+
                 foreach (var op in operators.Properties()) {
                     if (!EvaluateCondition(op.Name, actual, (double)op.Value)) {
                         conditionsMet = false;
@@ -295,17 +299,19 @@ public class ScenarioEngine : MonoBehaviour {
         return false;
     }
 
-    double ReadStateValue(string key) {
+    bool TryReadStateValue(string key, out double value) {
         if (key.StartsWith("vitals.")) {
             var vitalsSource = FindFirstObjectByType<DefaultNamespace.VitalsDataSource>();
-            return vitalsSource.GetVital(key.Substring("vitals.".Length));
+            return vitalsSource.TryGetVital(key.Substring("vitals.".Length), out value);
         }
         if (key.StartsWith("flags.")) {
             string flagName = key.Substring("flags.".Length);
-            return flags.ContainsKey(flagName) && flags[flagName] ? 1 : 0;
+            value = flags.ContainsKey(flagName) && flags[flagName] ? 1 : 0;
+            return true;
         }
         Debug.LogWarning("Unknown condition key: " + key);
-        return 0;
+        value = 0;
+        return false;
     }
 
     void ApplyRuleEffect(Effect effect) {

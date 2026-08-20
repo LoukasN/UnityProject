@@ -21,7 +21,6 @@ public class UIManager : MonoBehaviour {
     bool isPaused;
     bool gameplayStarted;
     public bool GameplayActive => gameplayStarted && !isPaused;
-    public bool IsPaused => isPaused;
     bool wasMovableBeforePause;
     bool wasTimerRunningBeforePause;
 
@@ -52,19 +51,6 @@ public class UIManager : MonoBehaviour {
         playerMovement = FindFirstObjectByType<PlayerMovement>();
 
         OpenScenarioSelect();
-
-        StartCoroutine(PushInitialVitalsWhenReady());
-    }
-
-    IEnumerator PushInitialVitalsWhenReady() {
-        var scenarioLoader = FindFirstObjectByType<ScenarioLoader>();
-        var vitalsDataSource = FindFirstObjectByType<DefaultNamespace.VitalsDataSource>();
-
-        while (scenarioLoader.CurrentScenario == null) {
-            yield return null;
-        }
-
-        vitalsDataSource.UpdateVitals(scenarioLoader.CurrentScenario.initialState.vitals);
     }
 
     public void RefreshStartScreenText() {

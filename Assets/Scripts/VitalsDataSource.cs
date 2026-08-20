@@ -131,23 +131,33 @@ public class VitalsDataSource : PulseDataSource {
         return (systolic, diastolic);
     }
 
-    public double GetVital(string name) {
+    public bool TryGetVital(string name, out double value) {
         switch (name) {
         case "hr":
-            return currentHr;
+            value = currentHr;
+            return true;
         case "spo2":
-            return currentSpo2;
+            value = currentSpo2;
+            return true;
         case "rr":
-            return currentRr;
+            value = currentRr;
+            return true;
         case "temp":
-            return currentTemp;
+            value = currentTemp;
+            return true;
         case "bp_systolic":
-            return currentSystolic;
+            value = currentSystolic;
+            return true;
         case "bp_diastolic":
-            return currentDiastolic;
+            value = currentDiastolic;
+            return true;
+        case "bp_mean":
+            value = currentDiastolic + (currentSystolic - currentDiastolic) / 3.0;
+            return true;
         default:
             Debug.LogWarning($"VitalsDataSource: unknown vital '{name}'.");
-            return 0;
+            value = 0;
+            return false;
         }
     }
 }
