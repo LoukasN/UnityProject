@@ -287,6 +287,7 @@ GameObject:
   - component: {fileID: 115539958}
   - component: {fileID: 115539957}
   - component: {fileID: 115539956}
+  - component: {fileID: 115539959}
   m_Layer: 6
   m_Name: HeartRate
   m_TagString: Untagged
@@ -463,6 +464,25 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 0
+--- !u!114 &115539959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115539954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166b8d42c10f8a94c869178159875bf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VitalBlinker
+  hotspotId: hs_monitor
+  vitalKey: hr
+  targets: []
+  alertColor: {r: 1, g: 0, b: 0, a: 1}
+  blinkInterval: 0.5
+  audioSource: {fileID: 0}
+  loopSoundWhileAlerting: 1
 --- !u!1 &143758479
 GameObject:
   m_ObjectHideFlags: 0
@@ -895,6 +915,7 @@ GameObject:
   - component: {fileID: 220868427}
   - component: {fileID: 220868426}
   - component: {fileID: 220868425}
+  - component: {fileID: 220868428}
   m_Layer: 6
   m_Name: rr
   m_TagString: Untagged
@@ -1071,6 +1092,25 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 0
+--- !u!114 &220868428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220868423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166b8d42c10f8a94c869178159875bf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VitalBlinker
+  hotspotId: hs_monitor
+  vitalKey: rr
+  targets: []
+  alertColor: {r: 1, g: 0, b: 0, a: 1}
+  blinkInterval: 0.5
+  audioSource: {fileID: 0}
+  loopSoundWhileAlerting: 1
 --- !u!1 &584956010
 GameObject:
   m_ObjectHideFlags: 0
@@ -1534,28 +1574,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 828508121}
   m_CullTransparentMesh: 0
---- !u!114 &830729297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c300108eb8c4b144a3c57c88e71fca4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pulse.Unity.PulseData
-  timeStampList:
-    list: []
-  valuesTable:
-  - list: []
-  - list: []
-  - list: []
-  - list: []
-  - list: []
-  - list: []
-  - list: []
 --- !u!1 &846793062
 GameObject:
   m_ObjectHideFlags: 0
@@ -1970,7 +1988,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VitalBlinker
   hotspotId: hs_monitor
   vitalKey: spo2
-  target: {fileID: 0}
+  targets: []
   alertColor: {r: 1, g: 0, b: 0, a: 1}
   blinkInterval: 0.5
   audioSource: {fileID: 889157080}
@@ -3428,6 +3446,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0.15999985, y: 0}
   m_SizeDelta: {x: 0.01, y: -0.252}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &1741345140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c300108eb8c4b144a3c57c88e71fca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pulse.Unity.PulseData
+  timeStampList:
+    list: []
+  valuesTable:
+  - list: []
+  - list: []
+  - list: []
+  - list: []
+  - list: []
+  - list: []
+  - list: []
 --- !u!1 &1750263372
 GameObject:
   m_ObjectHideFlags: 0
@@ -3473,7 +3513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97028b25c0c010a408caaba631b104b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.VitalsDataSource
-  data: {fileID: 830729297}
+  data: {fileID: 1741345140}
 --- !u!1 &1787343759
 GameObject:
   m_ObjectHideFlags: 0
@@ -3992,6 +4032,7 @@ GameObject:
   - component: {fileID: 1994155110}
   - component: {fileID: 1994155109}
   - component: {fileID: 1994155108}
+  - component: {fileID: 1994155111}
   m_Layer: 6
   m_Name: BP
   m_TagString: Untagged
@@ -4170,6 +4211,28 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 0
+--- !u!114 &1994155111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994155106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166b8d42c10f8a94c869178159875bf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VitalBlinker
+  hotspotId: hs_monitor
+  vitalKey: bp_systolic, bp_diastolic
+  targets:
+  - {fileID: 846793065}
+  - {fileID: 143758482}
+  - {fileID: 1868589356}
+  alertColor: {r: 1, g: 0, b: 0, a: 1}
+  blinkInterval: 0.5
+  audioSource: {fileID: 0}
+  loopSoundWhileAlerting: 1
 --- !u!1 &2056568338
 GameObject:
   m_ObjectHideFlags: 0
@@ -4408,6 +4471,7 @@ GameObject:
   - component: {fileID: 2116900058}
   - component: {fileID: 2116900057}
   - component: {fileID: 2116900056}
+  - component: {fileID: 2116900059}
   m_Layer: 6
   m_Name: Temp
   m_TagString: Untagged
@@ -4584,6 +4648,25 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 0
+--- !u!114 &2116900059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116900054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166b8d42c10f8a94c869178159875bf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VitalBlinker
+  hotspotId: hs_monitor
+  vitalKey: temp
+  targets: []
+  alertColor: {r: 1, g: 0, b: 0, a: 1}
+  blinkInterval: 0.5
+  audioSource: {fileID: 0}
+  loopSoundWhileAlerting: 1
 --- !u!1 &2122403185
 GameObject:
   m_ObjectHideFlags: 0

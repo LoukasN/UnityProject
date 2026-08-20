@@ -12,10 +12,9 @@ public class VitalBlinker : MonoBehaviour {
 
     [SerializeField]
     string vitalKey;
-    public string VitalKey => vitalKey;
 
     [SerializeField]
-    Graphic target;
+    List<Graphic> targets = new List<Graphic>();
 
     [SerializeField]
     Color alertColor = Color.red;
@@ -29,17 +28,55 @@ public class VitalBlinker : MonoBehaviour {
     [SerializeField]
     bool loopSoundWhileAlerting = true;
 
-    Color normalColor;
+    readonly List<string> keys = new List<string>();
+    readonly List<Graphic> resolvedTargets = new List<Graphic>();
+    readonly List<Color> normalColors = new List<Color>();
     bool alerting;
     bool blinkOn;
     float timer;
 
-    void Awake() {
-        if (target == null)
-            target = GetComponent<Graphic>();
+    public bool HasVitalKeys => keys.Count > 0;
 
-        if (target != null)
-            normalColor = target.color;
+    public bool MatchesVital(ICollection<string> vitalKeys) {
+        foreach (var key in keys) {
+            if (vitalKeys.Contains(key)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void Awake() {
+        keys.Clear();
+        if (!string.IsNullOrWhiteSpace(vitalKey)) {
+            foreach (var part in vitalKey.Split(',')) {
+                string trimmed = part.Trim();
+                if (trimmed.Length > 0) {
+                    keys.Add(trimmed);
+                }
+            }
+        }
+
+        resolvedTargets.Clear();
+        foreach (var target in targets) {
+            if (target != null) {
+                resolvedTargets.Add(target);
+            }
+        }
+
+        if (resolvedTargets.Count == 0) {
+            var own = GetComponent<Graphic>();
+            if (own != null) {
+                resolvedTargets.Add(own);
+            } else if (GetComponent<RectTransform>() != null) {
+                resolvedTargets.AddRange(GetComponentsInChildren<Graphic>(true));
+            }
+        }
+
+        normalColors.Clear();
+        foreach (var target in resolvedTargets) {
+            normalColors.Add(target.color);
+        }
 
         if (audioSource == null)
             audioSource = GetComponentInChildren<AudioSource>();
@@ -66,20 +103,28 @@ public class VitalBlinker : MonoBehaviour {
         if (audioSource != null) {
             if (on) {
                 audioSource.loop = loopSoundWhileAlerting;
-                Debug.Log("Sound Playing?");
                 audioSource.Play();
             } else {
-                Debug.Log("Sound Not Playing?");
                 audioSource.Stop();
             }
         }
     }
 
     void Update() {
-        if (!alerting || target == null)
+        if (!alerting)
             return;
 
-        if (UIManager.Instance != null && UIManager.Instance.IsPaused)
+        bool gameplayActive = UIManager.Instance == null || UIManager.Instance.GameplayActive;
+
+        if (audioSource != null) {
+            if (!gameplayActive && audioSource.isPlaying) {
+                audioSource.Pause();
+            } else if (gameplayActive && !audioSource.isPlaying) {
+                audioSource.UnPause();
+            }
+        }
+
+        if (!gameplayActive || resolvedTargets.Count == 0)
             return;
 
         timer += Time.deltaTime;
@@ -93,7 +138,8 @@ public class VitalBlinker : MonoBehaviour {
     void ApplyColor(bool showAlert) {
         blinkOn = showAlert;
 
-        if (target != null)
-            target.color = showAlert ? alertColor : normalColor;
+        for (int i = 0; i < resolvedTargets.Count; i++) {
+            resolvedTargets[i].color = showAlert ? alertColor : normalColors[i];
+        }
     }
 }

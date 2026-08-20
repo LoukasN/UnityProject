@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour {
     public GameObject pauseMenuPanel;
     bool isPaused;
     bool gameplayStarted;
+    public bool GameplayActive => gameplayStarted && !isPaused;
     public bool IsPaused => isPaused;
     bool wasMovableBeforePause;
     bool wasTimerRunningBeforePause;

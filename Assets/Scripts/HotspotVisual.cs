@@ -24,10 +24,10 @@ public static class HotspotVisual {
             bool alert;
             if (alarmAll) {
                 alert = true;
-            } else if (string.IsNullOrEmpty(blinker.VitalKey)) {
+            } else if (!blinker.HasVitalKeys) {
                 alert = alarmingVitals.Count > 0;
             } else {
-                alert = alarmingVitals.Contains(blinker.VitalKey);
+                alert = blinker.MatchesVital(alarmingVitals);
             }
 
             blinker.SetAlert(alert);
