@@ -6,8 +6,18 @@ public class TimerDisplay : MonoBehaviour {
     private TMP_Text timerText;
 
     void Update() {
-        if (GameTimer.Instance != null) {
-            timerText.text = GameTimer.Instance.GetFormattedTime();
+        ScenarioEngine engine = ScenarioEngine.Instance;
+        bool armed = engine != null && engine.TimeoutArmed;
+
+        if (timerText.enabled != armed) {
+            timerText.enabled = armed;
         }
+
+        if (!armed) {
+            return;
+        }
+
+        float remaining = Mathf.Max(0f, engine.TimeoutRemaining);
+        timerText.text = $"{Mathf.FloorToInt(remaining / 60f):00}:{Mathf.FloorToInt(remaining % 60f):00}";
     }
 }

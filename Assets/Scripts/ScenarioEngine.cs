@@ -22,6 +22,9 @@ public class ScenarioEngine : MonoBehaviour {
     private float timeoutRemaining;
     private bool timeoutArmed;
 
+    public bool TimeoutArmed => timeoutArmed;
+    public float TimeoutRemaining => timeoutRemaining;
+
     [SerializeField]
     private float nodeTransitionDelay = 1.5f;
     [SerializeField]
