@@ -8,11 +8,33 @@ public static class HotspotVisual {
         }
     }
 
-    public static void Apply(string hotspotId, string state) {
-        Apply(hotspotId, state, null);
+    public static void SetAlarming(string hotspotId, ICollection<string> alarmingVitals, bool alarmAll) {
+        if (string.IsNullOrEmpty(hotspotId)) {
+            return;
+        }
+
+        var blinkers = VitalBlinker.Active;
+        for (int i = blinkers.Count - 1; i >= 0; i--) {
+            var blinker = blinkers[i];
+
+            if (blinker.HotspotId != hotspotId) {
+                continue;
+            }
+
+            bool alert;
+            if (alarmAll) {
+                alert = true;
+            } else if (string.IsNullOrEmpty(blinker.VitalKey)) {
+                alert = alarmingVitals.Count > 0;
+            } else {
+                alert = alarmingVitals.Contains(blinker.VitalKey);
+            }
+
+            blinker.SetAlert(alert);
+        }
     }
 
-    public static void Apply(string hotspotId, string state, ICollection<string> vitalKeys) {
+    public static void Apply(string hotspotId, string state) {
         if (string.IsNullOrEmpty(hotspotId)) {
             return;
         }
@@ -24,10 +46,6 @@ public static class HotspotVisual {
             var blinker = blinkers[i];
 
             if (blinker.HotspotId != hotspotId) {
-                continue;
-            }
-
-            if (vitalKeys != null && !string.IsNullOrEmpty(blinker.VitalKey) && !vitalKeys.Contains(blinker.VitalKey)) {
                 continue;
             }
 

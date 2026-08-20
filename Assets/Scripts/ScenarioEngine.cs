@@ -211,6 +211,9 @@ public class ScenarioEngine : MonoBehaviour {
             return;
         }
 
+        var alarmingByHotspot = new Dictionary<string, HashSet<string>>();
+        var unscopedAlarms = new HashSet<string>();
+
         foreach (var rule in scenario.rules.globalRules) {
             if (rule.condition == null || rule.effects == null) {
                 continue;
@@ -242,11 +245,34 @@ public class ScenarioEngine : MonoBehaviour {
 
             foreach (var effect in rule.effects) {
                 if (effect.type == "ui_visual") {
-                    HotspotVisual.Apply(effect.target, conditionsMet ? effect.state : "normal", watchedVitals);
+                    if (string.IsNullOrEmpty(effect.target)) {
+                        continue;
+                    }
+
+                    if (!alarmingByHotspot.TryGetValue(effect.target, out var vitals)) {
+                        vitals = new HashSet<string>();
+                        alarmingByHotspot[effect.target] = vitals;
+                    }
+
+                    if (!conditionsMet || effect.state == "normal") {
+                        continue;
+                    }
+
+                    if (watchedVitals.Count == 0) {
+                        unscopedAlarms.Add(effect.target);
+                    }
+
+                    foreach (var vital in watchedVitals) {
+                        vitals.Add(vital);
+                    }
                 } else if (conditionsMet && !wasActive) {
                     ApplyRuleEffect(effect);
                 }
             }
+        }
+
+        foreach (var (hotspotId, vitals) in alarmingByHotspot) {
+            HotspotVisual.SetAlarming(hotspotId, vitals, unscopedAlarms.Contains(hotspotId));
         }
     }
 
@@ -283,9 +309,7 @@ public class ScenarioEngine : MonoBehaviour {
     }
 
     void ApplyRuleEffect(Effect effect) {
-        if (effect.type == "ui_visual") {
-            HotspotVisual.Apply(effect.target, effect.state);
-        } else if (effect.type == "ui_toast") {
+        if (effect.type == "ui_toast") {
             UIManager.Instance.ShowToast(effect.message, effect.style == "danger");
         } else {
             Debug.LogWarning("Unknown rule effect type: " + effect.type);
