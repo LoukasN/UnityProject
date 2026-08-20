@@ -79,6 +79,9 @@ public class VitalBlinker : MonoBehaviour {
         if (!alerting || target == null)
             return;
 
+        if (UIManager.Instance != null && UIManager.Instance.IsPaused)
+            return;
+
         timer += Time.deltaTime;
         if (timer < blinkInterval)
             return;
