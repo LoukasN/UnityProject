@@ -23,6 +23,12 @@ public class VitalBlinker : MonoBehaviour {
     [SerializeField]
     float blinkInterval = 0.5f;
 
+    [SerializeField]
+    AudioSource audioSource;
+
+    [SerializeField]
+    bool loopSoundWhileAlerting = true;
+
     Color normalColor;
     bool alerting;
     bool blinkOn;
@@ -34,6 +40,9 @@ public class VitalBlinker : MonoBehaviour {
 
         if (target != null)
             normalColor = target.color;
+
+        if (audioSource == null)
+            audioSource = GetComponentInChildren<AudioSource>();
     }
 
     void OnEnable() {
@@ -54,6 +63,16 @@ public class VitalBlinker : MonoBehaviour {
         alerting = on;
         timer = 0f;
         ApplyColor(on);
+        if (audioSource != null) {
+            if (on) {
+                audioSource.loop = loopSoundWhileAlerting;
+                Debug.Log("Sound Playing?");
+                audioSource.Play();
+            } else {
+                Debug.Log("Sound Not Playing?");
+                audioSource.Stop();
+            }
+        }
     }
 
     void Update() {
