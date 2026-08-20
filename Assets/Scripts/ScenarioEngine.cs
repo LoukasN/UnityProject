@@ -91,6 +91,13 @@ public class ScenarioEngine : MonoBehaviour {
         nodeTransitionCoroutine = StartCoroutine(EnterNodeAfterDelay(currentNode));
     }
 
+    public void AbortScenario() {
+        StopPendingNodeWork();
+        currentNode = null;
+        activeRules.Clear();
+        HotspotVisual.ClearAll();
+    }
+
     void StopPendingNodeWork() {
         timeoutArmed = false;
         if (nodeTransitionCoroutine != null) {

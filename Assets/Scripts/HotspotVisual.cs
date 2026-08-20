@@ -1,6 +1,13 @@
 using System.Collections.Generic;
 
 public static class HotspotVisual {
+    public static void ClearAll() {
+        var blinkers = VitalBlinker.Active;
+        for (int i = blinkers.Count - 1; i >= 0; i--) {
+            blinkers[i].SetAlert(false);
+        }
+    }
+
     public static void Apply(string hotspotId, string state) {
         Apply(hotspotId, state, null);
     }

@@ -161,6 +161,10 @@ public class UIManager : MonoBehaviour {
 
         GameTimer.Instance.ResetTimer();
 
+        if (ScenarioEngine.Instance != null) {
+            ScenarioEngine.Instance.AbortScenario();
+        }
+
         OpenScenarioSelect();
     }
 
@@ -273,6 +277,10 @@ public class UIManager : MonoBehaviour {
         endScreenPanel.SetActive(false);
 
         GameTimer.Instance.ResetTimer();
+
+        if (ScenarioEngine.Instance != null) {
+            ScenarioEngine.Instance.AbortScenario();
+        }
 
         OpenStartScreen();
     }
