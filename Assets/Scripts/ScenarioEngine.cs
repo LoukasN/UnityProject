@@ -299,7 +299,7 @@ public class ScenarioEngine : MonoBehaviour {
         Log("EHR_SUBMIT", string.Join(", ", filledFieldKeys));
 
         if (currentNode != null && currentNode.type == "gate") {
-            TryPassGate(currentNode);
+            TryPassGate(currentNode, filledFieldKeys);
         }
     }
 
@@ -319,25 +319,20 @@ public class ScenarioEngine : MonoBehaviour {
         return formId + "." + fieldId;
     }
 
-    void TryPassGate(Node gate) {
+    void TryPassGate(Node gate, List<string> submittedFieldKeys) {
         if (gate.gateRequirements?.requiredForms == null) {
             ApplyEffects(gate.effectsOnPass);
             GoToNode(gate.nextNodeId);
             return;
         }
 
-        var missing = new List<string>();
         foreach (var required in gate.gateRequirements.requiredForms) {
             foreach (var field in required.fields) {
-                if (!documentedFields.Contains(required.formId + "." + field)) {
-                    missing.Add(DescribeField(required.formId, field));
+                if (!submittedFieldKeys.Contains(required.formId + "." + field)) {
+                    UIManager.Instance.ShowToast(gate.feedbackBlocked);
+                    return;
                 }
             }
-        }
-
-        if (missing.Count > 0) {
-            UIManager.Instance.ShowToast(gate.feedbackBlocked + "\nΛείπει: " + string.Join(", ", missing));
-            return;
         }
 
         if (!string.IsNullOrEmpty(gate.feedbackSuccess)) {
