@@ -22,15 +22,6 @@ public class VitalBlinker : MonoBehaviour {
     [SerializeField]
     float blinkInterval = 0.5f;
 
-    [SerializeField]
-    AudioSource audioSource;
-
-    [SerializeField]
-    AudioSource passiveAudioSource;
-
-    [SerializeField]
-    bool loopSoundWhileAlerting = true;
-
     readonly List<string> keys = new List<string>();
     readonly List<Graphic> resolvedTargets = new List<Graphic>();
     readonly List<Color> normalColors = new List<Color>();
@@ -39,6 +30,8 @@ public class VitalBlinker : MonoBehaviour {
     float timer;
 
     public bool HasVitalKeys => keys.Count > 0;
+
+    public bool IsAlerting => alerting;
 
     public bool MatchesVital(ICollection<string> vitalKeys) {
         foreach (var key in keys) {
@@ -80,12 +73,6 @@ public class VitalBlinker : MonoBehaviour {
         foreach (var target in resolvedTargets) {
             normalColors.Add(target.color);
         }
-
-        if (audioSource == null)
-            audioSource = GetComponentInChildren<AudioSource>();
-
-        if (passiveAudioSource == null)
-            passiveAudioSource = GetComponentInChildren<AudioSource>();
     }
 
     void OnEnable() {
@@ -106,16 +93,6 @@ public class VitalBlinker : MonoBehaviour {
         alerting = on;
         timer = 0f;
         ApplyColor(on);
-        if (audioSource != null && passiveAudioSource != null) {
-            if (on) {
-                audioSource.loop = loopSoundWhileAlerting;
-                passiveAudioSource.Stop();
-                audioSource.Play();
-            } else {
-                audioSource.Stop();
-                passiveAudioSource.Play();
-            }
-        }
     }
 
     void Update() {
@@ -123,16 +100,6 @@ public class VitalBlinker : MonoBehaviour {
             return;
 
         bool gameplayActive = UIManager.Instance == null || UIManager.Instance.GameplayActive;
-
-        if (audioSource != null && passiveAudioSource != null) {
-            if (!gameplayActive && audioSource.isPlaying && !passiveAudioSource.isPlaying) {
-                audioSource.Pause();
-                passiveAudioSource.UnPause();
-            } else if (gameplayActive && !audioSource.isPlaying) {
-                passiveAudioSource.Pause();
-                audioSource.UnPause();
-            }
-        }
 
         if (!gameplayActive || resolvedTargets.Count == 0)
             return;
