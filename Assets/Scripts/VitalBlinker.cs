@@ -26,6 +26,9 @@ public class VitalBlinker : MonoBehaviour {
     AudioSource audioSource;
 
     [SerializeField]
+    AudioSource passiveAudioSource;
+
+    [SerializeField]
     bool loopSoundWhileAlerting = true;
 
     readonly List<string> keys = new List<string>();
@@ -80,6 +83,9 @@ public class VitalBlinker : MonoBehaviour {
 
         if (audioSource == null)
             audioSource = GetComponentInChildren<AudioSource>();
+
+        if (passiveAudioSource == null)
+            passiveAudioSource = GetComponentInChildren<AudioSource>();
     }
 
     void OnEnable() {
@@ -100,12 +106,14 @@ public class VitalBlinker : MonoBehaviour {
         alerting = on;
         timer = 0f;
         ApplyColor(on);
-        if (audioSource != null) {
+        if (audioSource != null && passiveAudioSource != null) {
             if (on) {
                 audioSource.loop = loopSoundWhileAlerting;
+                passiveAudioSource.Stop();
                 audioSource.Play();
             } else {
                 audioSource.Stop();
+                passiveAudioSource.Play();
             }
         }
     }
@@ -116,10 +124,12 @@ public class VitalBlinker : MonoBehaviour {
 
         bool gameplayActive = UIManager.Instance == null || UIManager.Instance.GameplayActive;
 
-        if (audioSource != null) {
-            if (!gameplayActive && audioSource.isPlaying) {
+        if (audioSource != null && passiveAudioSource != null) {
+            if (!gameplayActive && audioSource.isPlaying && !passiveAudioSource.isPlaying) {
                 audioSource.Pause();
+                passiveAudioSource.UnPause();
             } else if (gameplayActive && !audioSource.isPlaying) {
+                passiveAudioSource.Pause();
                 audioSource.UnPause();
             }
         }
