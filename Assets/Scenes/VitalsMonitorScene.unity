@@ -206,8 +206,8 @@ LineRenderer:
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Positions:
-  - {x: 3.4181004, y: -0.00000000760099, z: 0}
-  - {x: -3.4181004, y: -0.00000000760099, z: 0}
+  - {x: 3.4451003, y: -0.00000000760099, z: 0}
+  - {x: -3.4451003, y: -0.00000000760099, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.008161501
@@ -747,28 +747,6 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 0
---- !u!114 &263551149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c300108eb8c4b144a3c57c88e71fca4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pulse.Unity.PulseData
-  timeStampList:
-    list: []
-  valuesTable:
-  - list: []
-  - list: []
-  - list: []
-  - list: []
-  - list: []
-  - list: []
-  - list: []
 --- !u!1 &403604546
 GameObject:
   m_ObjectHideFlags: 0
@@ -1387,8 +1365,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 629157690}
-  m_LocalRotation: {x: -0.00000008523867, y: -0.36570188, z: -0.00000003771491, w: 0.930732}
-  m_LocalPosition: {x: 0, y: 0, z: -7.01}
+  m_LocalRotation: {x: 0, y: -0.36650118, z: 0, w: 0.9304176}
+  m_LocalPosition: {x: 0, y: 0, z: -7.0027}
   m_LocalScale: {x: 0.7746, y: 0.7225498, z: 1.2128752}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1396,11 +1374,11 @@ RectTransform:
   - {fileID: 781495926}
   - {fileID: 483028155}
   m_Father: {fileID: 1160538891}
-  m_LocalEulerAnglesHint: {x: 0, y: -42.902, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -43, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -4.79, y: 6.0801597}
-  m_SizeDelta: {x: 14.897, y: 7.893}
+  m_AnchoredPosition: {x: -4.8466, y: 6.0801597}
+  m_SizeDelta: {x: 14.987, y: 7.893}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &629157692
 Canvas:
@@ -1810,6 +1788,28 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 0
+--- !u!114 &907791528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c300108eb8c4b144a3c57c88e71fca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pulse.Unity.PulseData
+  timeStampList:
+    list: []
+  valuesTable:
+  - list: []
+  - list: []
+  - list: []
+  - list: []
+  - list: []
+  - list: []
+  - list: []
 --- !u!1 &1086941333
 GameObject:
   m_ObjectHideFlags: 0
@@ -2351,7 +2351,7 @@ Transform:
   m_GameObject: {fileID: 1160538890}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.9063079, z: -0, w: 0.42261827}
-  m_LocalPosition: {x: -3.792993, y: 1.2533176, z: -2.4939625}
+  m_LocalPosition: {x: -3.792993, y: 1.248, z: -2.4939625}
   m_LocalScale: {x: 0.04034499, y: 0.06521, z: 0.044224992}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2370,7 +2370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97028b25c0c010a408caaba631b104b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.VitalsDataSource
-  data: {fileID: 1624734049}
+  data: {fileID: 1472828645}
 --- !u!1 &1205012863
 GameObject:
   m_ObjectHideFlags: 0
@@ -2479,7 +2479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97028b25c0c010a408caaba631b104b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.VitalsDataSource
-  data: {fileID: 263551149}
+  data: {fileID: 907791528}
 --- !u!4 &1213652973
 Transform:
   m_ObjectHideFlags: 0
@@ -2905,7 +2905,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VitalBlinker
   hotspotId: hs_monitor
   vitalKey: spo2
-  target: {fileID: 0}
+  targets: []
   alertColor: {r: 1, g: 0, b: 0, a: 1}
   blinkInterval: 0.5
   audioSource: {fileID: 1313235330}
@@ -3246,6 +3246,28 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 0
+--- !u!114 &1472828645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c300108eb8c4b144a3c57c88e71fca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pulse.Unity.PulseData
+  timeStampList:
+    list: []
+  valuesTable:
+  - list: []
+  - list: []
+  - list: []
+  - list: []
+  - list: []
+  - list: []
+  - list: []
 --- !u!1 &1525715676
 GameObject:
   m_ObjectHideFlags: 0
@@ -3535,28 +3557,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1547946814}
   m_CullTransparentMesh: 0
---- !u!114 &1624734049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c300108eb8c4b144a3c57c88e71fca4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pulse.Unity.PulseData
-  timeStampList:
-    list: []
-  valuesTable:
-  - list: []
-  - list: []
-  - list: []
-  - list: []
-  - list: []
-  - list: []
-  - list: []
 --- !u!1 &1643993956
 GameObject:
   m_ObjectHideFlags: 0
@@ -4079,8 +4079,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2025891609}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.004795758, y: 0.040787846, z: -0.00019572361, w: 0.99915636}
-  m_LocalPosition: {x: 0.74878526, y: 2.0574155, z: -2.580347}
+  m_LocalRotation: {x: 0.0036011422, y: 0.0383978, z: -0.00013835763, w: 0.9992561}
+  m_LocalPosition: {x: 0.8632486, y: 1.7088256, z: -2.3177037}
   m_LocalScale: {x: 2.4999301, y: 3.58061, z: 1.0000901}
   m_ConstrainProportionsScale: 0
   m_Children: []
