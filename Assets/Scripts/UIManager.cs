@@ -280,8 +280,8 @@ public class UIManager : MonoBehaviour
     {
         endTitleText.text = endText;
         endScoreText.text = $"Score: {score}";
-        endDecisionPathText.text = "Επιλογές: \n\n" + string.Join("\n", decisionPath);
-        endMissedDocsText.text = missedDocs.Count > 0 ? "Χαμένες επιλογές: " + string.Join("\n", missedDocs) : "Καμία χαμένη επιλογή";
+        endDecisionPathText.text = "Οι επιλογές σου\n\n" + string.Join("\n", decisionPath);
+        endMissedDocsText.text = missedDocs.Count > 0 ? "Τεκμηρίωση που δεν ολοκληρώθηκε\n\n" + string.Join("\n", missedDocs) : "Η τεκμηρίωση ολοκληρώθηκε πλήρως";
 
         vitalsMonitorPanel.SetActive(false);
         EHRPanel.SetActive(false);
