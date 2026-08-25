@@ -4,7 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class UIManager : MonoBehaviour {
+public class UIManager : MonoBehaviour
+{
     public static UIManager Instance;
 
     public GameObject vitalsMonitorPanel;
@@ -14,6 +15,7 @@ public class UIManager : MonoBehaviour {
     public TextMeshProUGUI startTitleText;
     public TextMeshProUGUI startDescriptionText;
     public TextMeshProUGUI startGoalsText;
+    public TextMeshProUGUI startMetaText;
 
     public GameObject scenarioSelectPanel;
 
@@ -47,58 +49,79 @@ public class UIManager : MonoBehaviour {
 
     public PlayerMovement playerMovement;
 
-    void Start() {
+    void Start()
+    {
         playerMovement = FindFirstObjectByType<PlayerMovement>();
 
         OpenScenarioSelect();
     }
 
-    public void RefreshStartScreenText() {
+    public void RefreshStartScreenText()
+    {
         var scenarioLoader = FindFirstObjectByType<ScenarioLoader>();
         var meta = scenarioLoader.CurrentScenario.meta;
 
+        var goals = meta.learningGoals;
+
         startTitleText.text = meta.title;
         startDescriptionText.text = meta.description;
-        startGoalsText.text = string.Join("\n", meta.learningGoals);
+        startGoalsText.text = goals == null || goals.Count == 0 ? "" : "• " + string.Join("\n• ", goals);
+
+        if (startMetaText != null)
+        {
+            startMetaText.text = $"Δυσκολία: {meta.difficulty}\n\nΕκτιμώμενη διάρκεια: {meta.estimatedDurationMinutes} λεπτά";
+        }
     }
 
-    void Awake() {
+    void Awake()
+    {
         Instance = this;
     }
 
-    void Update() {
+    void Update()
+    {
         PollObjectiveText();
 
-        if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame) {
+        if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
             return;
         }
 
-        if (isPaused) {
+        if (isPaused)
+        {
             ClosePauseMenu();
-        } else if (gameplayStarted) {
+        }
+        else if (gameplayStarted)
+        {
             OpenPauseMenu();
         }
     }
 
-    void PollObjectiveText() {
-        if (ScenarioEngine.Instance == null) {
+    void PollObjectiveText()
+    {
+        if (ScenarioEngine.Instance == null)
+        {
             return;
         }
 
         Node node = ScenarioEngine.Instance.CurrentNode;
-        if (node == lastObjectiveNode) {
+        if (node == lastObjectiveNode)
+        {
             return;
         }
 
         lastObjectiveNode = node;
 
-        if (node != null && node.type != "end") {
+        if (node != null && node.type != "end")
+        {
             SetObjectiveText(node.text, node.description);
         }
     }
 
-    public void OpenPauseMenu() {
-        if (isPaused) {
+    public void OpenPauseMenu()
+    {
+        if (isPaused)
+        {
             return;
         }
 
@@ -109,7 +132,8 @@ public class UIManager : MonoBehaviour {
         objectivePanel.SetActive(false);
 
         playerMovement.canMove = false;
-        if (wasTimerRunningBeforePause) {
+        if (wasTimerRunningBeforePause)
+        {
             GameTimer.Instance.Pause();
         }
         isPaused = true;
@@ -118,27 +142,32 @@ public class UIManager : MonoBehaviour {
         Cursor.visible = true;
     }
 
-    public void ClosePauseMenu() {
+    public void ClosePauseMenu()
+    {
         pauseMenuPanel.SetActive(false);
         isPaused = false;
 
         playerMovement.canMove = wasMovableBeforePause;
-        if (wasTimerRunningBeforePause) {
+        if (wasTimerRunningBeforePause)
+        {
             GameTimer.Instance.Resume();
         }
 
-        if (wasMovableBeforePause) {
+        if (wasMovableBeforePause)
+        {
             RefreshObjectiveVisibility();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
     }
 
-    public void QuitGame() {
+    public void QuitGame()
+    {
         Application.Quit();
     }
 
-    public void PauseMenuGoToMainMenu() {
+    public void PauseMenuGoToMainMenu()
+    {
         pauseMenuPanel.SetActive(false);
         isPaused = false;
 
@@ -148,14 +177,16 @@ public class UIManager : MonoBehaviour {
 
         GameTimer.Instance.ResetTimer();
 
-        if (ScenarioEngine.Instance != null) {
+        if (ScenarioEngine.Instance != null)
+        {
             ScenarioEngine.Instance.AbortScenario();
         }
 
         OpenScenarioSelect();
     }
 
-    public void OpenVitalsMonitor() {
+    public void OpenVitalsMonitor()
+    {
         vitalsMonitorPanel.SetActive(true);
         objectivePanel.SetActive(false);
 
@@ -165,7 +196,8 @@ public class UIManager : MonoBehaviour {
         Cursor.visible = true;
     }
 
-    public void CloseVitalsMonitor() {
+    public void CloseVitalsMonitor()
+    {
         vitalsMonitorPanel.SetActive(false);
         RefreshObjectiveVisibility();
 
@@ -175,7 +207,8 @@ public class UIManager : MonoBehaviour {
         Cursor.visible = false;
     }
 
-    public void OpenEHR() {
+    public void OpenEHR()
+    {
         EHRPanel.SetActive(true);
         objectivePanel.SetActive(false);
 
@@ -185,7 +218,8 @@ public class UIManager : MonoBehaviour {
         Cursor.visible = true;
     }
 
-    public void CloseEHR() {
+    public void CloseEHR()
+    {
         EHRPanel.SetActive(false);
         RefreshObjectiveVisibility();
 
@@ -195,7 +229,8 @@ public class UIManager : MonoBehaviour {
         Cursor.visible = false;
     }
 
-    public void OpenStartScreen() {
+    public void OpenStartScreen()
+    {
         startScreenPanel.SetActive(true);
         objectivePanel.SetActive(false);
 
@@ -206,7 +241,8 @@ public class UIManager : MonoBehaviour {
         Cursor.visible = true;
     }
 
-    public void CloseStartScreen() {
+    public void CloseStartScreen()
+    {
         startScreenPanel.SetActive(false);
         RefreshObjectiveVisibility();
 
@@ -221,7 +257,8 @@ public class UIManager : MonoBehaviour {
         ScenarioEngine.Instance.StartScenario(scenarioLoader.CurrentScenario);
     }
 
-    public void OpenScenarioSelect() {
+    public void OpenScenarioSelect()
+    {
         startScreenPanel.SetActive(false);
         scenarioSelectPanel.SetActive(true);
         objectivePanel.SetActive(false);
@@ -233,12 +270,14 @@ public class UIManager : MonoBehaviour {
         Cursor.visible = true;
     }
 
-    public void CloseScenarioSelect() {
+    public void CloseScenarioSelect()
+    {
         scenarioSelectPanel.SetActive(false);
         OpenStartScreen();
     }
 
-    public void ShowDebrief(string endText, int score, List<string> decisionPath, List<string> missedDocs) {
+    public void ShowDebrief(string endText, int score, List<string> decisionPath, List<string> missedDocs)
+    {
         endTitleText.text = endText;
         endScoreText.text = $"Score: {score}";
         endDecisionPathText.text = "Επιλογές: \n\n" + string.Join("\n", decisionPath);
@@ -260,39 +299,46 @@ public class UIManager : MonoBehaviour {
         Cursor.visible = true;
     }
 
-    public void GoToStart() {
+    public void GoToStart()
+    {
         endScreenPanel.SetActive(false);
 
         GameTimer.Instance.ResetTimer();
 
-        if (ScenarioEngine.Instance != null) {
+        if (ScenarioEngine.Instance != null)
+        {
             ScenarioEngine.Instance.AbortScenario();
         }
 
         OpenStartScreen();
     }
 
-    public void SetObjectiveText(string text, string description = null) {
+    public void SetObjectiveText(string text, string description = null)
+    {
         objectiveText.text = text;
         hasObjectiveText = !string.IsNullOrEmpty(text);
         RefreshObjectiveVisibility();
 
-        if (objectiveDescriptionText != null) {
+        if (objectiveDescriptionText != null)
+        {
             bool hasDescription = !string.IsNullOrEmpty(description);
             objectiveDescriptionText.text = description;
             objectiveDescriptionText.gameObject.SetActive(hasDescription);
         }
     }
 
-    void RefreshObjectiveVisibility() {
+    void RefreshObjectiveVisibility()
+    {
         objectivePanel.SetActive(hasObjectiveText);
     }
 
-    public void ShowToast(string message) {
+    public void ShowToast(string message)
+    {
         ShowToast(message, false);
     }
 
-    public void ShowToast(string message, bool isDanger) {
+    public void ShowToast(string message, bool isDanger)
+    {
         if (string.IsNullOrEmpty(message))
             return;
 
@@ -306,9 +352,11 @@ public class UIManager : MonoBehaviour {
         toastCoroutine = StartCoroutine(HideToastAfterDelay());
     }
 
-    IEnumerator HideToastAfterDelay() {
+    IEnumerator HideToastAfterDelay()
+    {
         float remaining = toastDuration;
-        while (remaining > 0f) {
+        while (remaining > 0f)
+        {
             if (!isPaused)
                 remaining -= Time.deltaTime;
             yield return null;
