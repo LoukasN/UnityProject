@@ -6,6 +6,30 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/StartScene.unity
+    guid: 6d56d0b594466fc879813151cc669ee8
+  - enabled: 1
+    path: Assets/Scenes/UIScene.unity
+    guid: 451e818a75054a947af2bac054c0d396
+  - enabled: 1
+    path: Assets/Scenes/RoomScene.unity
+    guid: 09bcb8a6cc59dfd4588367667e40da37
+  - enabled: 1
+    path: Assets/Scenes/VitalsMonitorScene.unity
+    guid: 617738618fe8ac34a9ab8495f67e2796
+  - enabled: 1
+    path: Assets/Scenes/CallButtonScene.unity
+    guid: 82bd069963a7b754cbcc3bc9f1d98d1b
+  - enabled: 1
+    path: Assets/Scenes/VentilatorScene.unity
+    guid: bc38c8339c4b9244bb40718b9899b9e7
+  - enabled: 1
+    path: Assets/Scenes/PatientScene.unity
+    guid: 9d1309fe30aa7e840996ce54fac84062
+  - enabled: 1
+    path: Assets/Scenes/EHRScene.unity
+    guid: d9faedd4fef4b4547973360ef141813c
+  - enabled: 1
     path: Assets/Scenes/PlayerScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
