@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI startTitleText;
     public TextMeshProUGUI startDescriptionText;
     public TextMeshProUGUI startGoalsText;
-    public TextMeshProUGUI startMetaText;
+    public TextMeshProUGUI scenarioInformationText;
 
     public GameObject scenarioSelectPanel;
 
@@ -67,9 +67,9 @@ public class UIManager : MonoBehaviour
         startDescriptionText.text = meta.description;
         startGoalsText.text = goals == null || goals.Count == 0 ? "" : "• " + string.Join("\n• ", goals);
 
-        if (startMetaText != null)
+        if (scenarioInformationText != null)
         {
-            startMetaText.text = $"Δυσκολία: {meta.difficulty}\n\nΕκτιμώμενη διάρκεια: {meta.estimatedDurationMinutes} λεπτά";
+            scenarioInformationText.text = $"Δυσκολία: {meta.difficulty}\n\nΕκτιμώμενη διάρκεια: {meta.estimatedDurationMinutes} λεπτά";
         }
     }
 
