@@ -20,6 +20,8 @@ public class UIManager : MonoBehaviour
     public GameObject scenarioSelectPanel;
 
     public GameObject pauseMenuPanel;
+
+    public GameObject helpPanel;
     bool isPaused;
     bool gameplayStarted;
     public bool GameplayActive => gameplayStarted && !isPaused;
@@ -88,7 +90,11 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        if (isPaused)
+        if (helpPanel != null && helpPanel.activeSelf)
+        {
+            CloseHelp();
+        }
+        else if (isPaused)
         {
             ClosePauseMenu();
         }
@@ -146,6 +152,7 @@ public class UIManager : MonoBehaviour
 
     public void ClosePauseMenu()
     {
+        CloseHelp();
         pauseMenuPanel.SetActive(false);
         isPaused = false;
 
@@ -162,6 +169,24 @@ public class UIManager : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+        }
+    }
+
+    public void ToggleHelp()
+    {
+        if (helpPanel == null)
+        {
+            return;
+        }
+
+        helpPanel.SetActive(!helpPanel.activeSelf);
+    }
+
+    public void CloseHelp()
+    {
+        if (helpPanel != null)
+        {
+            helpPanel.SetActive(false);
         }
     }
 
@@ -223,6 +248,7 @@ public class UIManager : MonoBehaviour
 
     public void CloseEHR()
     {
+        CloseHelp();
         EHRPanel.SetActive(false);
         RefreshObjectiveVisibility();
 
@@ -246,6 +272,7 @@ public class UIManager : MonoBehaviour
 
     public void CloseStartScreen()
     {
+        CloseHelp();
         startScreenPanel.SetActive(false);
         RefreshObjectiveVisibility();
 
@@ -275,6 +302,7 @@ public class UIManager : MonoBehaviour
 
     public void CloseScenarioSelect()
     {
+        CloseHelp();
         scenarioSelectPanel.SetActive(false);
         OpenStartScreen();
     }
