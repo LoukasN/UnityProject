@@ -44,6 +44,7 @@ public class UIManager : MonoBehaviour
     public float toastDuration = 5f;
 
     Coroutine toastCoroutine;
+    bool hasToastText;
     bool hasObjectiveText;
     Node lastObjectiveNode;
 
@@ -130,6 +131,7 @@ public class UIManager : MonoBehaviour
 
         pauseMenuPanel.SetActive(true);
         objectivePanel.SetActive(false);
+        toastPanel.SetActive(false);
 
         playerMovement.canMove = false;
         if (wasTimerRunningBeforePause)
@@ -153,9 +155,11 @@ public class UIManager : MonoBehaviour
             GameTimer.Instance.Resume();
         }
 
+        RefreshObjectiveVisibility();
+        RefreshToastVisibility();
+
         if (wasMovableBeforePause)
         {
-            RefreshObjectiveVisibility();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -173,7 +177,8 @@ public class UIManager : MonoBehaviour
 
         vitalsMonitorPanel.SetActive(false);
         EHRPanel.SetActive(false);
-        toastPanel.SetActive(false);
+        ClearToast();
+        ClearObjective();
 
         GameTimer.Instance.ResetTimer();
 
@@ -188,7 +193,6 @@ public class UIManager : MonoBehaviour
     public void OpenVitalsMonitor()
     {
         vitalsMonitorPanel.SetActive(true);
-        objectivePanel.SetActive(false);
 
         playerMovement.canMove = false;
 
@@ -210,7 +214,6 @@ public class UIManager : MonoBehaviour
     public void OpenEHR()
     {
         EHRPanel.SetActive(true);
-        objectivePanel.SetActive(false);
 
         playerMovement.canMove = false;
 
@@ -289,7 +292,8 @@ public class UIManager : MonoBehaviour
         isPaused = false;
 
         endScreenPanel.SetActive(true);
-        objectivePanel.SetActive(false);
+        ClearObjective();
+        ClearToast();
 
         playerMovement.canMove = false;
         GameTimer.Instance.Pause();
@@ -302,6 +306,8 @@ public class UIManager : MonoBehaviour
     public void GoToStart()
     {
         endScreenPanel.SetActive(false);
+        ClearObjective();
+        ClearToast();
 
         GameTimer.Instance.ResetTimer();
 
@@ -332,6 +338,30 @@ public class UIManager : MonoBehaviour
         objectivePanel.SetActive(hasObjectiveText);
     }
 
+    void ClearObjective()
+    {
+        hasObjectiveText = false;
+        lastObjectiveNode = null;
+        objectiveText.text = "";
+        objectivePanel.SetActive(false);
+    }
+
+    void RefreshToastVisibility()
+    {
+        toastPanel.SetActive(hasToastText);
+    }
+
+    void ClearToast()
+    {
+        hasToastText = false;
+        if (toastCoroutine != null)
+        {
+            StopCoroutine(toastCoroutine);
+            toastCoroutine = null;
+        }
+        toastPanel.SetActive(false);
+    }
+
     public void ShowToast(string message)
     {
         ShowToast(message, false);
@@ -347,6 +377,7 @@ public class UIManager : MonoBehaviour
 
         toastText.text = message;
         toastBackground.color = isDanger ? toastDangerColor : toastDefaultColor;
+        hasToastText = true;
         toastPanel.SetActive(true);
 
         toastCoroutine = StartCoroutine(HideToastAfterDelay());
@@ -361,6 +392,7 @@ public class UIManager : MonoBehaviour
                 remaining -= Time.deltaTime;
             yield return null;
         }
-        toastPanel.SetActive(false);
+        toastCoroutine = null;
+        ClearToast();
     }
 }

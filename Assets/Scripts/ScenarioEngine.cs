@@ -125,9 +125,22 @@ public class ScenarioEngine : MonoBehaviour
         }
     }
 
+    IEnumerator WaitScenarioSeconds(float seconds)
+    {
+        float remaining = seconds;
+        while (remaining > 0f)
+        {
+            if (GameTimer.Instance.IsRunning)
+            {
+                remaining -= Time.deltaTime;
+            }
+            yield return null;
+        }
+    }
+
     IEnumerator EnterNodeAfterDelay(Node node)
     {
-        yield return new WaitForSeconds(nodeTransitionDelay);
+        yield return WaitScenarioSeconds(nodeTransitionDelay);
 
         nodeTransitionCoroutine = null;
 
@@ -168,7 +181,7 @@ public class ScenarioEngine : MonoBehaviour
 
     IEnumerator AutoAdvanceMessage(Node node)
     {
-        yield return new WaitForSeconds(messageDuration);
+        yield return WaitScenarioSeconds(messageDuration);
 
         messageAdvanceCoroutine = null;
         GoToNode(node.nextNodeId);
