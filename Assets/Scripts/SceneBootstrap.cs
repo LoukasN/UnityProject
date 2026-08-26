@@ -9,7 +9,7 @@ public class SceneBootstrap : MonoBehaviour
 
     void Awake()
     {
-        Screen.SetResolution(1920, 1080, FullScreenMode.Windowed);
+        Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, FullScreenMode.FullScreenWindow);
 
         foreach (var sceneName in scenesToLoad)
         {
