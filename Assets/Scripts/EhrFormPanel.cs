@@ -51,10 +51,22 @@ public class EhrFormPanel : MonoBehaviour {
 
     public bool RequiredFieldsFilled() {
         foreach (var entry in fields) {
-            if (requiredFields.Contains(entry.fieldKey) && string.IsNullOrWhiteSpace(entry.input.text)) {
+            if (requiredFields.Contains(entry.fieldKey) && !HasContent(entry.input.text)) {
                 return false;
             }
         }
         return true;
+    }
+
+    private static bool HasContent(string value) {
+        if (string.IsNullOrWhiteSpace(value)) {
+            return false;
+        }
+        foreach (var character in value) {
+            if (char.IsLetterOrDigit(character)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

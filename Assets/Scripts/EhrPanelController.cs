@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EhrPanelController : MonoBehaviour {
     public EhrFormPanel assessmentForm;
     public EhrFormPanel interventionForm;
     public EhrFormPanel communicationForm;
+    public Button submitButton;
 
     private EhrFormPanel[] Forms => new[] {
         assessmentForm, interventionForm, communicationForm
@@ -23,6 +25,8 @@ public class EhrPanelController : MonoBehaviour {
         }
 
         activeNode = ScenarioEngine.Instance.CurrentNode;
+
+        RefreshSubmitButton();
 
         if (activeNode == null) {
             Debug.LogWarning("EhrPanelController: No active scenario node.");
@@ -45,6 +49,12 @@ public class EhrPanelController : MonoBehaviour {
         foreach (var form in Forms) {
             byFormId.TryGetValue(form.formId, out var required);
             form.SetRequiredFields(required);
+        }
+    }
+
+    private void RefreshSubmitButton() {
+        if (submitButton != null) {
+            submitButton.interactable = activeNode != null && activeNode.type == "gate";
         }
     }
 
