@@ -64,7 +64,17 @@ public class GenericInteractable : MonoBehaviour, InterfaceInteractable {
     public string InteractMessage {
         get {
             var option = GetActiveOption();
-            return option != null ? $"{option.label} (E)" : "";
+            if (option != null && !string.IsNullOrEmpty(option.label)) {
+                return $"{option.label} (E)";
+            }
+
+            if (ScenarioEngine.Instance == null
+                || !ScenarioLookup.IsHotspotActive(ScenarioEngine.Instance.CurrentNode, hotspotId)) {
+                return "";
+            }
+
+            string label = ScenarioEngine.Instance.GetHotspotLabel(hotspotId);
+            return string.IsNullOrEmpty(label) ? "" : $"{label} (E)";
         }
     }
 

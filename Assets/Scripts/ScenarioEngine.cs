@@ -404,6 +404,18 @@ public class ScenarioEngine : MonoBehaviour {
         Log("HOTSPOT_INTERACTION", hotspotId);
     }
 
+    public string GetHotspotLabel(string hotspotId) {
+        if (scenario?.hotspots == null || string.IsNullOrEmpty(hotspotId)) {
+            return null;
+        }
+        foreach (var hotspot in scenario.hotspots) {
+            if (hotspot.id == hotspotId) {
+                return hotspot.label;
+            }
+        }
+        return null;
+    }
+
     void FinishScenario(Node node) {
         var debrief = node.debriefConfig;
         var missedDocs = new List<string>();
