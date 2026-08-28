@@ -61,6 +61,10 @@ public class ScenarioEngine : MonoBehaviour {
         logEntries.Clear();
         timeoutArmed = false;
 
+        foreach (var form in FindObjectsByType<EhrFormPanel>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {
+            form.ClearAll();
+        }
+
         var vitalsSource = FindFirstObjectByType<DefaultNamespace.VitalsDataSource>();
         vitalsSource.UpdateVitals(scenario.initialState.vitals);
 

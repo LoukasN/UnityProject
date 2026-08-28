@@ -26,6 +26,12 @@ public class EhrFormPanel : MonoBehaviour {
         RefreshInteractable();
     }
 
+    public void ClearAll() {
+        foreach (var entry in fields) {
+            entry.input.text = "";
+        }
+    }
+
     private void RefreshInteractable() {
         foreach (var entry in fields) {
             bool required = requiredFields.Contains(entry.fieldKey);
