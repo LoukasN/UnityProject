@@ -204,4 +204,3 @@ public class Logging {
     [JsonProperty("export_format")]
     public string exportFormat;
 }
-

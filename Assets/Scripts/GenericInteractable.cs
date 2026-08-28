@@ -43,8 +43,7 @@ public class GenericInteractable : MonoBehaviour, InterfaceInteractable {
         if (outline == null)
             return;
 
-        bool scenarioActive = ScenarioEngine.Instance != null
-            && ScenarioLookup.IsHotspotActive(ScenarioEngine.Instance.CurrentNode, hotspotId);
+        bool scenarioActive = ScenarioEngine.Instance != null && ScenarioLookup.IsHotspotActive(ScenarioEngine.Instance.CurrentNode, hotspotId);
         bool shouldGlow = InteractionGlowSettings.Enabled && (isHovered || scenarioActive);
 
         if (outline.enabled != shouldGlow)

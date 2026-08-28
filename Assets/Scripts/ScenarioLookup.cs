@@ -13,7 +13,6 @@ public static class ScenarioLookup {
         if (GetOptionForHotspot(node, hotspotId) != null) {
             return true;
         }
-        return node.gateRequirements != null
-            && node.gateRequirements.targetHotspot == hotspotId;
+        return node.gateRequirements != null && node.gateRequirements.targetHotspot == hotspotId;
     }
 }
