@@ -27,6 +27,9 @@ public class UIManager : MonoBehaviour
     public bool GameplayActive => gameplayStarted && !isPaused;
     bool wasMovableBeforePause;
     bool wasTimerRunningBeforePause;
+    bool wasMovableBeforeHelp;
+    bool wasTimerRunningBeforeHelp;
+    bool helpPaused;
 
     public GameObject endScreenPanel;
     public TextMeshProUGUI endTitleText;
@@ -172,21 +175,72 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ToggleHelp()
+    public void ToggleHelp(GameObject panel)
+    {
+        if (panel == null)
+        {
+            return;
+        }
+
+        bool willOpen = !panel.activeSelf;
+        CloseHelp();
+
+        if (!willOpen)
+        {
+            return;
+        }
+
+        panel.SetActive(true);
+        helpPanel = panel;
+
+        if (!gameplayStarted || isPaused)
+        {
+            return;
+        }
+
+        wasMovableBeforeHelp = playerMovement.canMove;
+        wasTimerRunningBeforeHelp = GameTimer.Instance.IsRunning;
+
+        playerMovement.canMove = false;
+        if (wasTimerRunningBeforeHelp)
+        {
+            GameTimer.Instance.Pause();
+        }
+        isPaused = true;
+        helpPaused = true;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void CloseHelp()
     {
         if (helpPanel == null)
         {
             return;
         }
 
-        helpPanel.SetActive(!helpPanel.activeSelf);
-    }
+        helpPanel.SetActive(false);
+        helpPanel = null;
 
-    public void CloseHelp()
-    {
-        if (helpPanel != null)
+        if (!helpPaused)
         {
-            helpPanel.SetActive(false);
+            return;
+        }
+
+        helpPaused = false;
+        isPaused = false;
+
+        playerMovement.canMove = wasMovableBeforeHelp;
+        if (wasTimerRunningBeforeHelp)
+        {
+            GameTimer.Instance.Resume();
+        }
+
+        if (wasMovableBeforeHelp)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 
@@ -197,6 +251,7 @@ public class UIManager : MonoBehaviour
 
     public void PauseMenuGoToMainMenu()
     {
+        CloseHelp();
         pauseMenuPanel.SetActive(false);
         isPaused = false;
 
@@ -309,6 +364,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowDebrief(string endText, int score, List<string> decisionPath, List<string> missedDocs)
     {
+        CloseHelp();
         endTitleText.text = endText;
         endScoreText.text = $"Score: {score}";
         endDecisionPathText.text = "Οι επιλογές σου\n\n" + string.Join("\n", decisionPath);
