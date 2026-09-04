@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioEngine
   nodeTransitionDelay: 1.5
-  messageDuration: 3
+  messageDuration: 6
 --- !u!4 &781403624
 Transform:
   m_ObjectHideFlags: 0

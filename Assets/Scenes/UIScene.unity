@@ -4944,7 +4944,7 @@ MonoBehaviour:
   toastBackground: {fileID: 445340409}
   toastDefaultColor: {r: 0.4627451, g: 0.75686276, b: 0.9764706, a: 0.9764706}
   toastDangerColor: {r: 1, g: 0.18753722, b: 0, a: 0.9764706}
-  toastDuration: 3
+  toastDuration: 5
   playerMovement: {fileID: 0}
 --- !u!224 &428879246
 RectTransform:
