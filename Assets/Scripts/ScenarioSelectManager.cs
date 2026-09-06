@@ -33,7 +33,11 @@ public class ScenarioSelectManager : MonoBehaviour {
             Directory.CreateDirectory(path);
         }
 
-        Application.OpenURL("file:///" + path.Replace('\\', '/'));
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+        System.Diagnostics.Process.Start("explorer.exe", "\"" + Path.GetFullPath(path).Replace('/', '\\') + "\"");
+#else
+        Application.OpenURL("file://" + Path.GetFullPath(path).Replace('\\', '/'));
+#endif
     }
 
     public void PopulateList() {
